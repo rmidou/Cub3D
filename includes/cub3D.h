@@ -6,7 +6,7 @@
 /*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:48:11 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/23 20:48:44 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/24 15:08:18 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_main
 	float		dx;
 	float		dy;
 	float		fd;
+	int		widhtmap;
 	int		heightmap;
 	
 	char	**map;
@@ -48,6 +49,7 @@ typedef struct s_main
 	void	*winptr;
 	void	*black;
 	void	*white;
+	void	*bigblack;
 
 }	t_main;
 
@@ -57,6 +59,7 @@ int		on_destroy(t_main *map);
 /*		move.c	*/
 float	deg_to_rad(int a);
 int		move(int key, t_main *map);
+int		fix_ang(int a);
 
 /*		map.c	*/
 void	free_map(t_main *map);
@@ -68,4 +71,8 @@ void	init_img(t_main *map);
 void	put_(t_main *map);
 void	put_img(char chara, t_main map);
 
+/*		draw_rays.c	*/
+void	draw_rays(t_main *map);
+int		draw_line(t_main *main, int x0, int y0, int x1, int y1, int color);
+void    draw_view_line(t_main *main);
 #endif

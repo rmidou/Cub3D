@@ -6,12 +6,13 @@
 /*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 20:43:30 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/23 20:44:33 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/24 17:47:01 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
+#include <stdio.h>
 float	deg_to_rad(int a)
 {
 	return (a * M_PI / 180.0);
@@ -30,12 +31,45 @@ int	fix_ang(int a)
 	return (a);
 }
 
+void	reset_ecran(t_main *map)
+{
+	int	y;
+	int	i;
+
+	map->x = 0;
+	map->y = 500;
+	y = 0;
+	i = 0;
+	while (y < 8)
+	{
+		i = 0;
+		while (i < 34)
+		{
+			map->x = i;
+			map->y = y + 8;
+			put_img('1', *map);
+			i++;
+		}
+		y++;
+	}
+}
+
 int	move(int key, t_main *map)
 {
+	int	py;
+	int	px;
+
 	if (key == 's')
 	{
+		px = map->px;
+		py = map->py;
 		map->py -= map->dy * 10;
 		map->px += map->dx * 10;
+		if (map->map[(int)round(map->py/64)][(int)round(map->px/64)] == '1')
+		{
+			map->py = py;
+			map->px = px;
+		}
 	}
 	if (key == 'd')
 	{
@@ -46,8 +80,15 @@ int	move(int key, t_main *map)
 	}
 	if (key == 'w')
 	{
+		px = map->px;
+		py = map->py;
 		map->py += map->dy * 10;
 		map->px -= map->dx * 10;
+		if (map->map[(int)round(map->py/64)][(int)round(map->px/64)] == '1')
+		{
+			map->py = py;
+			map->px = px;
+		}
 	}
 	if (key == 'a')
 	{
@@ -59,6 +100,7 @@ int	move(int key, t_main *map)
 	if (key == 65307)
 		on_destroy(map);
 	print_map(map);
+	reset_ecran(map);
 	put_(map);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:49:42 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/23 20:44:00 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:50:08 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	main(int ac, char **av)
 	if (ac < 2)
 		return (0);
 	map.mlxptr = mlx_init();
-	map.winptr = mlx_new_window(map.mlxptr, 2000,
-			500, "marge");
+	map.winptr = mlx_new_window(map.mlxptr, 2000, 1000, "marge");
 	map.px = 150;
 	map.py = 400;
 	map.pa = 90;

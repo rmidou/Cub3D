@@ -6,7 +6,7 @@
 /*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 20:28:06 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/23 20:38:19 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:42:36 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,24 @@ void	put_img(char chara, t_main map)
 
 void	put_(t_main *map)
 {
-	int	i;
-	int	y;
+	// int	i;
+	// int	y;
 
-	i = map->px;
-	map->px = map->px;
-	map->py = map->py;
-	while (i < map->px + 10)
-	{
-		mlx_pixel_put(map->mlxptr, map->winptr, i, map->py, RED_PIXEL);
-		y = map->py;
-		while (y < map->py + 10)
-		{
-			mlx_pixel_put(map->mlxptr, map->winptr, i, y, RED_PIXEL);
-			y++;
-		}
-		i++;
-	}
+	// i = map->px;
+	// map->px = map->px;
+	// map->py = map->py;
+	mlx_pixel_put(map->mlxptr, map->winptr, map->px, map->py, RED_PIXEL);
+	// while (i < map->px + 10)
+	// {
+	// 	mlx_pixel_put(map->mlxptr, map->winptr, i, map->py, RED_PIXEL);
+	// 	y = map->py;
+	// 	while (y < map->py + 10)
+	// 	{
+	// 		mlx_pixel_put(map->mlxptr, map->winptr, i, y, RED_PIXEL);
+	// 		y++;
+	// 	}
+	// 	i++;
+	// }
+	//draw_rays(map);
+	draw_view_line(map);
 }
