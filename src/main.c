@@ -6,7 +6,7 @@
 /*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:49:42 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/24 14:50:08 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/25 13:03:42 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int ac, char **av)
 	if (ac < 2)
 		return (0);
 	map.mlxptr = mlx_init();
-	map.winptr = mlx_new_window(map.mlxptr, 2000, 1000, "marge");
+	map.winptr = mlx_new_window(map.mlxptr, 1920, 1280, "marge");
 	map.px = 150;
 	map.py = 400;
 	map.pa = 90;
@@ -39,8 +39,6 @@ int	main(int ac, char **av)
 	map.dy = -sin(deg_to_rad(map.pa)); 
 	read_map(&map, av[1]);
 	init_img(&map);
-	print_map(&map);
-	put_(&map);
 	mlx_hook(map.winptr, KeyRelease, KeyReleaseMask, &move, &map);
 	mlx_hook(map.winptr, DestroyNotify, StructureNotifyMask, &on_destroy, &map);
 	mlx_loop(map.mlxptr);
