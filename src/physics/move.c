@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../../includes/cub3D.h"
 
 #include <stdio.h>
 float	deg_to_rad(float a)
@@ -24,21 +24,17 @@ void	reset_ecran(t_main *map)
 	int	y;
 	int	i;
 
-	map->x = 0;
-	map->y = 500;
 	y = 0;
 	i = 0;
-	while (y < 10)
+	while (y < SCREEN_H)
 	{
 		i = 0;
-		while (i < 34)
+		while (i < SCREEN_W)
 		{
-			map->x = i;
-			map->y = y + 10;
-			if (map->y >= 15)
-				put_img('1', *map);
+			if (y >= (SCREEN_H / 2))
+				set_pixel(BLACK_PIXEL, map->img, i, y);
 			else
-				put_img('2', *map);
+				set_pixel(BLUE_PIXEL, map->img, i, y);
 			i++;
 		}
 		y++;

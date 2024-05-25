@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: larz <larz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:48:11 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/25 17:10:24 by larz             ###   ########.fr       */
+/*   Updated: 2024/05/25 17:27:38 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@
 #define BLUE_PIXEL 0x77B5FE
 #define PI			3.141592f
 
-#define SCREEN_W = 640
-#define SCREEN_H = 480
-#define FOV = 90
+#define SCREEN_W	1920
+#define SCREEN_H	1280
+#define FOV			90
 
 typedef struct s_main
 {
@@ -121,4 +121,6 @@ void	put_img(char chara, t_main map);
 void	draw_rays(t_main *map);
 int		draw_line(t_main *main, int x0, int y0, int x1, int y1, int color);
 void    draw_view_line(t_main *main);
+
+void	set_pixel(int color, void *img, int x, int y);
 #endif

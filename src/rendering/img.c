@@ -1,4 +1,27 @@
-#include "../includes/cub3D.h"
+#include "../../includes/cub3D.h"
+
+void	set_pixel(int color, void *img, int x, int y)
+{
+	t_txr	data;
+	int		pixel;
+
+	data.data = mlx_get_data_addr(img, &data.bpp, &data.line, &data.endian);	
+	pixel = (y * data.line) + (x * (data.bpp / 8));
+	if (data.endian == 1)
+	{
+		data.data[pixel + 0] = (color >> 24);
+		data.data[pixel + 1] = (color >> 16) & 0xFF;
+		data.data[pixel + 2] = (color >> 8) & 0xFF;
+		data.data[pixel + 3] = (color) & 0xFF;
+	}
+	else if (data.endian == 0)
+	{
+		data.data[pixel + 0] = (color) & 0xFF;
+		data.data[pixel + 1] = (color >> 8) & 0xFF;
+		data.data[pixel + 2] = (color >> 16) & 0xFF;
+		data.data[pixel + 3] = (color >> 24);
+	}
+}
 
 void	init_img_22(int color, void *colorr)
 {
@@ -117,7 +140,7 @@ void	put_(t_main *map)
 	// i = map->px;
 	// map->px = map->px;
 	// map->py = map->py;
-	mlx_pixel_put(map->mlxptr, map->winptr, map->px, map->py, RED_PIXEL);
+	//mlx_pixel_put(map->mlxptr, map->winptr, map->px, map->py, RED_PIXEL);
 	// while (i < map->px + 10)
 	// {
 	// 	mlx_pixel_put(map->mlxptr, map->winptr, i, map->py, RED_PIXEL);
