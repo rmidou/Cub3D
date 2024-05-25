@@ -6,7 +6,7 @@
 /*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 08:37:52 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/24 16:50:25 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/25 13:35:25 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int    draw_line(t_main *main, int x0, int y0, int x1, int y1, int color)
 	while (1)
 	{
 		mlx_pixel_put(main->mlxptr, main->winptr, x0, y0, color);
+		// voir le so long de jules
 		tt += 1;
 	    if (x0 == x1 && y0 == y1)
 			break;
@@ -49,17 +50,21 @@ int    draw_line(t_main *main, int x0, int y0, int x1, int y1, int color)
 	return (tt);
 }
 
-void	draw_3D(t_main *main, int x, int len)
+void	draw_3D(t_main *main, int x, float len)
 {
 	int	i;
+	float height;
+	float dist_screen = 32.f;
 
 	i = x;
-	len = (64 * 500) / len;
-	if (len > 500)
-		len = 500;
-	while (i < x + 33)
+	//len = (64 * 640) / len;
+	height = (dist_screen / len) * 32.f * 64.f;
+	len = height;
+	if (len > 640)
+		len = 640;
+	while (i < x + 2)
 	{
-		draw_line(main, i, 750 - len / 2, i, 750 + len / 2, RED_PIXEL);
+		draw_line(main, i, 960 - len / 2, i, 960 + len / 2, RED_PIXEL);
 		i++;
 	}
 }
@@ -69,25 +74,25 @@ void    draw_view_line(t_main *main)
 	int line_length;
 	int x1;
 	int y1;
-	int	para;
-	int	tt;
-	int	ca;
+	float	para;
+	//int	tt;
+	//int	ca;
 
-	para = -30;
-	while (para != 30)
+	para = -45.f;
+	while (para <= 45.f)
 	{
 		line_length = 1;
-		x1 = main->px + cos(deg_to_rad(main->pa + para) - M_PI);
-		y1 = main->py + sin(deg_to_rad(main->pa + para) - M_PI);
+		x1 = main->px + cosf(deg_to_rad(main->pa + para) - PI);
+		y1 = main->py + sinf(deg_to_rad(main->pa + para) - PI);
 		while (main->map[(int)round(y1/64)][(int)round(x1/64)] != '1')
 		{
 			line_length++;
-			x1 = main->px + (cos(deg_to_rad(main->pa + para) - M_PI) * line_length);
-			y1 = main->py + (sin(deg_to_rad(main->pa + para) - M_PI) * line_length);
+			x1 = main->px + (cosf(deg_to_rad(main->pa + para) - PI) * line_length);
+			y1 = main->py + (sinf(deg_to_rad(main->pa + para) - PI) * line_length);
 		}
-		tt = draw_line(main, main->px, main->py, x1, y1, RED_PIXEL);
-		ca = fix_ang(main->pa - (main->pa + para));
-		draw_3D(main, (para + 30) * 33, tt * cos(deg_to_rad(ca)));
-		para++;
+		draw_line(main, main->px, main->py, x1, y1, RED_PIXEL);
+		//ca = fix_ang(main->pa - (main->pa + para));
+		draw_3D(main, (para + 30.f) * 33.f, sqrtf(powf(x1 - main->px, 2) + powf(y1 - main->py, 2)));
+		para+= 0.05f;
 	}
 }

@@ -6,16 +6,16 @@
 /*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 20:43:30 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/24 17:47:01 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/25 13:07:20 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
 #include <stdio.h>
-float	deg_to_rad(int a)
+float	deg_to_rad(float a)
 {
-	return (a * M_PI / 180.0);
+	return (a * PI / 180.0f);
 }
 
 int	fix_ang(int a)
@@ -40,14 +40,17 @@ void	reset_ecran(t_main *map)
 	map->y = 500;
 	y = 0;
 	i = 0;
-	while (y < 8)
+	while (y < 10)
 	{
 		i = 0;
 		while (i < 34)
 		{
 			map->x = i;
-			map->y = y + 8;
-			put_img('1', *map);
+			map->y = y + 10;
+			if (map->y >= 15)
+				put_img('1', *map);
+			else
+				put_img('2', *map);
 			i++;
 		}
 		y++;

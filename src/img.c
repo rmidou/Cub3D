@@ -6,11 +6,49 @@
 /*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 20:28:06 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/24 14:42:36 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/25 09:41:29 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
+
+void	init_img_22(int color, void *colorr)
+{
+	int		pixel_bits;
+	int		line_bytes;
+	int		endian;
+	char	*buffer;
+	int		y;
+	int		x;
+	int		pixel;
+
+	buffer = mlx_get_data_addr(colorr, &pixel_bits, &line_bytes, &endian);
+	y = 0;
+	while (y < 16)
+	{
+		x = 0;
+		while (x < 16)
+		{
+			pixel = (y * line_bytes) + (x * (pixel_bits / 8));
+			if (endian == 1)
+			{
+				buffer[pixel + 0] = (color >> 24);
+				buffer[pixel + 1] = (color >> 16) & 0xFF;
+				buffer[pixel + 2] = (color >> 8) & 0xFF;
+				buffer[pixel + 3] = (color) & 0xFF;
+			}
+			else if (endian == 0)
+			{
+				buffer[pixel + 0] = (color) & 0xFF;
+				buffer[pixel + 1] = (color >> 8) & 0xFF;
+				buffer[pixel + 2] = (color >> 16) & 0xFF;
+				buffer[pixel + 3] = (color >> 24);
+			}
+			x++;
+		}
+		y++;
+	}
+}
 
 void	init_img_2(int color, void *colorr)
 {
@@ -56,6 +94,12 @@ void	init_img(t_main *map)
 	init_img_2(BLACK_PIXEL, map->black);
 	map->white = mlx_new_image(map->mlxptr, 64, 64);
 	init_img_2(WHITE_PIXEL, map->white);
+	map->blue = mlx_new_image(map->mlxptr, 64, 64);
+	init_img_2(BLUE_PIXEL, map->blue);
+	map->little_white = mlx_new_image(map->mlxptr, 16, 16);
+	init_img_22(WHITE_PIXEL, map->little_white);
+	map->little_black = mlx_new_image(map->mlxptr, 16, 16);
+	init_img_22(BLACK_PIXEL, map->little_black);
 }
 
 void	put_img(char chara, t_main map)
@@ -66,6 +110,15 @@ void	put_img(char chara, t_main map)
 	if (chara == '0')
 		mlx_put_image_to_window
 			(map.mlxptr, map.winptr, map.white, map.x * 64, map.y * 64);
+	if (chara == '2')
+		mlx_put_image_to_window
+			(map.mlxptr, map.winptr, map.blue, map.x * 64, map.y * 64);
+	if (chara == '3')
+		mlx_put_image_to_window
+			(map.mlxptr, map.winptr, map.little_black, map.x * 16, map.y * 16);
+	if (chara == '4')
+		mlx_put_image_to_window
+			(map.mlxptr, map.winptr, map.little_white, map.x * 16, map.y * 16);
 }
 
 void	put_(t_main *map)

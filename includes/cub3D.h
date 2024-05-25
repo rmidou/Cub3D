@@ -6,7 +6,7 @@
 /*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:48:11 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/24 15:08:18 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/25 13:50:16 by rmidou           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@
 #define RED_PIXEL 0xFF0000
 #define BLACK_PIXEL 0x000000
 #define WHITE_PIXEL 0xFFFFFF
+#define BLUE_PIXEL 0x77B5FE
+#define PI			3.141592f
+
+#define SCREEN_W = 640
+#define SCREEN_H = 480
+#define FOV = 90
 
 typedef struct s_main
 {
@@ -45,11 +51,19 @@ typedef struct s_main
 	char	**map;
 	char	**buf;
 
+	void	*img;
+	char	*scr_data;
+	int		bpp;
+	int		line;
+	int		endian;
+
 	void	*mlxptr;
 	void	*winptr;
 	void	*black;
 	void	*white;
-	void	*bigblack;
+	void	*blue;
+	void	*little_black;
+	void	*little_white;
 
 }	t_main;
 
@@ -57,7 +71,7 @@ typedef struct s_main
 int		on_destroy(t_main *map);
 
 /*		move.c	*/
-float	deg_to_rad(int a);
+float	deg_to_rad(float a);
 int		move(int key, t_main *map);
 int		fix_ang(int a);
 
