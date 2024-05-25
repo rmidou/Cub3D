@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
+/*   By: larz <larz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:48:11 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/25 13:50:16 by rmidou           ###   ########.fr       */
+/*   Updated: 2024/05/25 17:10:24 by larz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,38 @@ typedef struct s_main
 	void	*little_white;
 
 }	t_main;
+
+typedef struct s_veci
+{
+	int	x;
+	int	y;
+}	t_veci;
+
+typedef struct s_vecf
+{
+	float	x;
+	float	y;
+}	t_vecf;
+
+typedef struct s_txr
+{
+	char			*file;
+	char			*data;
+	void			*img;
+	int				bpp;
+	int				line;
+	int				endian;
+	t_veci			size;
+}	t_txr;
+
+typedef struct s_map
+{
+	char	*file;
+	char	*data;
+	t_veci	size;
+	t_veci	spawn;
+	float	view;
+}	t_map;
 
 /*		main.c	*/
 int		on_destroy(t_main *map);
