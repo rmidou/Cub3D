@@ -14,7 +14,8 @@ void	init(t_main *map, char **av)
 {
 	map->mlxptr = mlx_init();
 	map->winptr = mlx_new_window(map->mlxptr, SCREEN_W, SCREEN_H, "cub3D");
-	map->img = mlx_new_image(map->mlxptr, SCREEN_W, SCREEN_H);
+	map->scr.img = mlx_new_image(map->mlxptr, SCREEN_W, SCREEN_H);
+	map->scr.data = mlx_get_data_addr(map->scr.img, &(map->scr.bpp), &(map->scr.line), &(map->scr.endian));
 	map->px = 150;
 	map->py = 400;
 	map->pa = 90;

@@ -25,15 +25,14 @@ void	reset_ecran(t_main *map)
 
 	y = 0;
 	i = 0;
+	ft_bzero(map->scr.data, SCREEN_W * SCREEN_H * (map->scr.bpp / 8));
 	while (y < SCREEN_H)
 	{
 		i = 0;
 		while (i < SCREEN_W)
 		{
-			if (y >= (SCREEN_H / 2))
-				set_pixel(BLACK_PIXEL, map->img, i, y);
-			else
-				set_pixel(BLUE_PIXEL, map->img, i, y);
+			if (y < (SCREEN_H / 2))
+				set_pixel(BLUE_PIXEL, map->scr.img, i, y);
 			i++;
 		}
 		y++;
@@ -142,6 +141,6 @@ int	move(int key, t_main *map)
 		on_destroy(map);
 	//print_map(map);
 	reset_ecran(map);
-	put_(map);
+	draw_view_line(map);
 	return (1);
 }

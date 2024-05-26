@@ -20,27 +20,6 @@ void	free_map(t_main *map)
 	free(map->buf);
 }
 
-void	print_map(t_main *map)
-{
-	int	y;
-	int	i;
-
-	y = 0;
-	i = 0;
-	while (map->map[y])
-	{
-		i = 0;
-		while (map->map[y][i])
-		{
-			map->x = i;
-			map->y = y;
-			put_img(map->map[y][i], *map);
-			i++;
-		}
-		y++;
-	}
-}
-
 void	nb_ligne(t_main *map, char *av)
 {
 	int		i;

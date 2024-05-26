@@ -18,8 +18,7 @@ int    draw_line(t_main *main, int x0, int y0, int x1, int y1, int color)
 	err = dx + dy;
 	while (1)
 	{
-		set_pixel(color, main->img, x0, y0);
-		// voir le so long de jules
+		set_pixel(color, main->scr.img, x0, y0);
 		tt += 1;
 	    if (x0 == x1 && y0 == y1)
 			break;
@@ -82,5 +81,5 @@ void    draw_view_line(t_main *main)
 		draw_3D(main, (para + 45.f) * SCREEN_W / 90, sqrtf(powf(x1 - main->px, 2) + powf(y1 - main->py, 2)), ca);
 		para+= 0.05f;
 	}
-	mlx_put_image_to_window(main->mlxptr, main->winptr, main->img, 0, 0);
+	mlx_put_image_to_window(main->mlxptr, main->winptr, main->scr.img, 0, 0);
 }
