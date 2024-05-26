@@ -44,7 +44,7 @@
 #define SCREEN_W	1920
 #define SCREEN_H	1280
 #define FOV 		90
-#define	SPEED		10
+#define	SPEED		0.1f
 
 typedef struct s_veci
 {
@@ -98,12 +98,12 @@ typedef struct s_main
 {
 	int		x;
 	int		y;
-	int		px;
-	int		py;
-	float		pa;
-	float		dx;
-	float		dy;
-	float		fd;
+	float	px;
+	float	py;
+	float	pa;
+	float	dx;
+	float	dy;
+	float	fd;
 
 	t_map	map;
 

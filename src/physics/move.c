@@ -43,14 +43,14 @@ void	reset_ecran(t_main *main)
 
 void	s(t_main *main)
 {
-	int	py;
-	int	px;
+	float	py;
+	float	px;
 
 	px = main->px;
 	py = main->py;
 	main->py -= main->dy * SPEED;
 	main->px += main->dx * SPEED;
-	if (main->map.map[(int)round(main->py/64)][(int)round(main->px/64)] == '1')
+	if (main->map.map[(int)round(main->py)][(int)round(main->px)] == '1')
 	{
 		main->py = py;
 		main->px = px;
@@ -59,14 +59,14 @@ void	s(t_main *main)
 
 void	w(t_main *main)
 {
-	int	py;
-	int	px;
+	float	py;
+	float	px;
 
 	px = main->px;
 	py = main->py;
 	main->py += main->dy * SPEED;
 	main->px -= main->dx * SPEED;
-	if (main->map.map[(int)round(main->py/64)][(int)round(main->px/64)] == '1')
+	if (main->map.map[(int)round(main->py)][(int)round(main->px)] == '1')
 	{
 		main->py = py;
 		main->px = px;
@@ -76,15 +76,15 @@ void	w(t_main *main)
 void	a(t_main *main)
 {
 	float	a;
-	int	py;
-	int	px;
+	float	py;
+	float	px;
 
 	px = main->px;
 	py = main->py;
 	a = fix_ang(main->pa + 90.f);
 	main->px += cosf(deg_to_rad(a)) * SPEED;
 	main->py -= -sinf(deg_to_rad(a)) * SPEED;
-	if (main->map.map[(int)round(main->py/64)][(int)round(main->px/64)] == '1')
+	if (main->map.map[(int)round(main->py)][(int)round(main->px)] == '1')
 	{
 		main->py = py;
 		main->px = px;
@@ -94,15 +94,15 @@ void	a(t_main *main)
 void	d(t_main *main)
 {
 	float	a;
-	int	py;
-	int	px;
+	float	py;
+	float	px;
 
 	px = main->px;
 	py = main->py;
 	a = fix_ang(main->pa - 90.f);
 	main->px += cosf(deg_to_rad(a)) * SPEED;
 	main->py -= -sinf(deg_to_rad(a)) * SPEED;
-	if (main->map.map[(int)round(main->py/64)][(int)round(main->px/64)] == '1')
+	if (main->map.map[(int)round(main->py)][(int)round(main->px)] == '1')
 	{
 		main->py = py;
 		main->px = px;

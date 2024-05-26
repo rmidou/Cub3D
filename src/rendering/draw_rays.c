@@ -43,9 +43,8 @@ void	draw_3D(t_main *main, int x, float len, int ca)
 	int		middle;
 
 	i = x;
-	//len = (64 * 640) / len;
 	middle = (int)roundf(SCREEN_H / 2);
-	len = (SCREEN_H * 64)/ (len * cos(deg_to_rad(ca)));
+	len = SCREEN_H / (len * cos(deg_to_rad(ca)));
 	if (len > SCREEN_H)
 		len = SCREEN_H;
 	while (i < x + 1)
@@ -57,26 +56,25 @@ void	draw_3D(t_main *main, int x, float len, int ca)
 
 void    draw_view_line(t_main *main)
 {
-	int line_length;
-	int x1;
-	int y1;
+	float 	x1;
+	float 	y1;
 	float	para;
-	//int	tt;
 	int	ca;
 
 	para = -45.f;
 	while (para <= 45.f)
 	{
-		line_length = 1;
 		x1 = main->px + cosf(deg_to_rad(main->pa + para) - PI);
 		y1 = main->py + sinf(deg_to_rad(main->pa + para) - PI);
-		while (main->map.map[(int)round(y1/64)][(int)round(x1/64)] == '0')
+		while (main->map.map[(int)roundf(y1)][(int)round(x1)] == '0')
 		{
-			line_length++;
-			x1 = main->px + (cosf(deg_to_rad(main->pa + para) - PI) * line_length);
-			y1 = main->py + (sinf(deg_to_rad(main->pa + para) - PI) * line_length);
+			ft_printf("%d %d\n", (int)roundf(y1), (int)roundf(x1));
+			if (y1 < 0.f || y1 > (float)main->map.size.y
+			||	x1 < 0.f || x1 > (float)main->map.size.x)
+				break ;
+			x1 += cosf(deg_to_rad(main->pa + para) - PI);
+			y1 += sinf(deg_to_rad(main->pa + para) - PI);
 		}
-		//draw_line(main, main->px, main->py, x1, y1, RED_PIXEL);
 		ca = fix_ang(main->pa - (main->pa + para));
 		draw_3D(main, (para + 45.f) * SCREEN_W / 90, sqrtf(powf(x1 - main->px, 2) + powf(y1 - main->py, 2)), ca);
 		para+= 0.05f;
