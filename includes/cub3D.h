@@ -44,6 +44,25 @@
 #define SCREEN_W	1920
 #define SCREEN_H	1280
 #define FOV 		90
+#define	SPEED		10
+
+typedef struct s_veci
+{
+	int	x;
+	int	y;
+}	t_veci;
+
+
+typedef struct s_txr
+{
+	char			*file;
+	char			*data;
+	void			*img;
+	int				bpp;
+	int				line;
+	int				endian;
+	t_veci			size;
+}	t_txr;
 
 typedef struct s_main
 {
@@ -61,44 +80,19 @@ typedef struct s_main
 	char	**map;
 	char	**buf;
 
-	void	*img;
-	char	*scr_data;
-	int		bpp;
-	int		line;
-	int		endian;
+	//t_map	map;
+
+	t_txr	scr;
 
 	void	*mlxptr;
 	void	*winptr;
-	void	*black;
-	void	*white;
-	void	*blue;
-	void	*little_black;
-	void	*little_white;
-
 }	t_main;
-
-typedef struct s_veci
-{
-	int	x;
-	int	y;
-}	t_veci;
 
 typedef struct s_vecf
 {
 	float	x;
 	float	y;
 }	t_vecf;
-
-typedef struct s_txr
-{
-	char			*file;
-	char			*data;
-	void			*img;
-	int				bpp;
-	int				line;
-	int				endian;
-	t_veci			size;
-}	t_txr;
 
 typedef struct s_clr
 {
@@ -133,13 +127,9 @@ int		fix_ang(int a);
 
 /*		map.c	*/
 void	free_map(t_main *map);
-void	print_map(t_main *map);
 int		read_map(t_main *map, char *av);
 
 /*		img.c	*/
-void	init_img(t_main *map);
-void	put_(t_main *map);
-void	put_img(char chara, t_main map);
 
 /*		draw_rays.c	*/
 void	draw_rays(t_main *map);
