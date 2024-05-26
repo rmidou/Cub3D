@@ -18,13 +18,11 @@ void	init(t_main *main, char **av)
 	main->winptr = mlx_new_window(main->mlxptr, SCREEN_W, SCREEN_H, "cub3d");
 	main->scr.img = mlx_new_image(main->mlxptr, SCREEN_W, SCREEN_H);
 	main->scr.data = mlx_get_data_addr(main->scr.img, &(main->scr.bpp), &(main->scr.line), &(main->scr.endian));
-	main->dx = cos(deg_to_rad(main->pa));
-	main->dy = -sin(deg_to_rad(main->pa));
 	if (build_map(main->mlxptr, &(main->map), av[1]) != OKAY_OKAY)
 		on_destroy(main);
-	main->px = main->map.spawn.x;
-	main->py = main->map.spawn.y;
-	main->pa = main->map.view;
+	main->plr.p.x = main->map.spawn.x;
+	main->plr.p.y = main->map.spawn.y;
+	main->plr.a = main->map.view;
 }
 
 int	main(int ac, char **av)

@@ -1,83 +1,87 @@
 #include "../../includes/cub3D.h"
 
-int    draw_line(t_main *main, int x0, int y0, int x1, int y1, int color)
-{
-	int dx;
-	int dy;
-	int sx;
-	int sy;
-	int err;
-	int e2;
-	int	tt;
-
-	tt = 0;
-	dx = abs(x1 - x0);
-	dy = -abs(y1 - y0);
-	sx = (x0 < x1) ? 1 : -1;
-	sy = (y0 < y1) ? 1 : -1;
-	err = dx + dy;
-	while (1)
-	{
-		set_pixel(color, main->scr.img, x0, y0);
-		tt += 1;
-	    if (x0 == x1 && y0 == y1)
-			break;
-	    e2 = 2 * err;
-	    if (e2 >= dy)
-		{
-	        err += dy;
-	        x0 += sx;
-	    }
-	    if (e2 <= dx)
-		{
-	        err += dx;
-	        y0 += sy;
-	    }
-	}
-	return (tt);
-}
-
-void	draw_3D(t_main *main, int x, float len, int ca)
+void	draw_line(t_main *main, t_veci start, t_veci end, int color)
 {
 	int		i;
-	int		middle;
+	t_veci	d;
+    int 	steps;
+	t_vecf	inc;
+	t_veci	pos;
 
-	i = x;
-	middle = (int)roundf(SCREEN_H / 2);
-	len = SCREEN_H / (len * cos(deg_to_rad(ca)));
-	if (len > SCREEN_H)
-		len = SCREEN_H;
-	while (i < x + 1)
+	d.x = end.x - start.x;
+	d.y = end.y - start.y;
+	steps = abs(d.x) > abs(d.y) ? abs(d.x) : abs(d.y); 
+    inc.x = d.x / (float)steps; 
+    inc.y = d.y / (float)steps; 
+    pos.x = start.x; 
+    pos.y = start.y;
+	i = 0;
+	while (i <= steps)
 	{
-		draw_line(main, i, middle - len / 2, i, middle + len / 2, RED_PIXEL);
+		set_pixel(color, main->scr, round(pos.x), round(pos.y));
+        pos.x += inc.x;
+        pos.y += inc.y;
 		i++;
 	}
 }
 
+void	draw_3D(t_main *main, int x, float len)
+{
+	int		i;
+	t_veci	start;
+	t_veci	end;
+	float	screen;
+
+	screen = tanf(90.f - (FOV / 2.f)) * (SCREEN_SIZE / 2.f);
+
+	i = x;
+	len = ((len / screen) * SCREEN_SIZE / 2.f) * ((float)SCREEN_W / SCREEN_SIZE) * 2;
+	if (len > SCREEN_H)
+		len = SCREEN_H;
+	while (i < x + 1)
+	{
+		start = (t_veci){i, (int)roundf(SCREEN_H / 2) - len / 2};
+		end = (t_veci){i, (int)roundf(SCREEN_H / 2) + len / 2};
+		draw_line(main, start, end, RED_PIXEL);
+		i++;
+	}
+}
+
+void	init_ray(t_ray *r, t_main *main, float ang)
+{
+	r->p = main->plr.p;
+	r->a = main->plr.a + ang;
+}
+
+char	get_map_block(t_vecf p, t_main *main)
+{
+	int	x;
+	int	y;
+
+	x = (int)floorf(p.x);
+	y = (int)floorf(p.y);
+	if (x < 0 || x >= main->map.size.x
+	|| y < 0 || y >= main->map.size.y)
+		return ('1');
+	return (main->map.map[y][x]);
+}
+
 void    draw_view_line(t_main *main)
 {
-	float 	x1;
-	float 	y1;
-	float	para;
-	int	ca;
+	float	ang;
+	t_ray	r;
 
-	para = -45.f;
-	while (para <= 45.f)
+	ang = -(FOV / 2.f);
+	while (ang <= (FOV / 2.f))
 	{
-		x1 = main->px + cosf(deg_to_rad(main->pa + para) - PI);
-		y1 = main->py + sinf(deg_to_rad(main->pa + para) - PI);
-		while (main->map.map[(int)roundf(y1)][(int)round(x1)] == '0')
+		init_ray(&r, main, ang);
+		while (get_map_block(r.p, main) == '0')
 		{
-			ft_printf("%d %d\n", (int)roundf(y1), (int)roundf(x1));
-			if (y1 < 0.f || y1 > (float)main->map.size.y
-			||	x1 < 0.f || x1 > (float)main->map.size.x)
-				break ;
-			x1 += cosf(deg_to_rad(main->pa + para) - PI);
-			y1 += sinf(deg_to_rad(main->pa + para) - PI);
+			whey(&r);
+			r.p = r.n;
 		}
-		ca = fix_ang(main->pa - (main->pa + para));
-		draw_3D(main, (para + 45.f) * SCREEN_W / 90, sqrtf(powf(x1 - main->px, 2) + powf(y1 - main->py, 2)), ca);
-		para+= 0.05f;
+		draw_3D(main, ((ang + (FOV / 2.f)) / 0.05f) * (SCREEN_W / (FOV / 0.05f)), dist((t_vecf){r.p.x - main->plr.p.x, r.p.y - main->plr.p.y}));
+		ang += 0.05f;
 	}
 	mlx_put_image_to_window(main->mlxptr, main->winptr, main->scr.img, 0, 0);
 }

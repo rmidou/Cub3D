@@ -32,9 +32,9 @@ void	reset_ecran(t_main *main)
 		while (i < SCREEN_W)
 		{
 			if (y >= (SCREEN_H / 2))
-				set_pixel(main->map.floor.color_i, main->scr.img, i, y);
+				set_pixel(main->map.floor.color_i, main->scr, i, y);
 			if (y < (SCREEN_H / 2))
-				set_pixel(main->map.ceiling.color_i, main->scr.img, i, y);
+				set_pixel(main->map.ceiling.color_i, main->scr, i, y);
 			i++;
 		}
 		y++;
@@ -46,14 +46,14 @@ void	s(t_main *main)
 	float	py;
 	float	px;
 
-	px = main->px;
-	py = main->py;
-	main->py -= main->dy * SPEED;
-	main->px += main->dx * SPEED;
-	if (main->map.map[(int)round(main->py)][(int)round(main->px)] == '1')
+	px = main->plr.p.x;
+	py = main->plr.p.y;
+	main->plr.p.x -= cosf(deg_to_rad(main->plr.a)) * SPEED;
+	main->plr.p.y -= sinf(deg_to_rad(main->plr.a)) * SPEED;
+	if (main->map.map[(int)round(main->plr.p.y)][(int)round(main->plr.p.x)] == '1')
 	{
-		main->py = py;
-		main->px = px;
+		main->plr.p.y = py;
+		main->plr.p.x = px;
 	}
 }
 
@@ -62,14 +62,14 @@ void	w(t_main *main)
 	float	py;
 	float	px;
 
-	px = main->px;
-	py = main->py;
-	main->py += main->dy * SPEED;
-	main->px -= main->dx * SPEED;
-	if (main->map.map[(int)round(main->py)][(int)round(main->px)] == '1')
+	px = main->plr.p.x;
+	py = main->plr.p.y;
+	main->plr.p.x += cosf(deg_to_rad(main->plr.a)) * SPEED;
+	main->plr.p.y += sinf(deg_to_rad(main->plr.a)) * SPEED;
+	if (main->map.map[(int)round(main->plr.p.y)][(int)round(main->plr.p.x)] == '1')
 	{
-		main->py = py;
-		main->px = px;
+		main->plr.p.y = py;
+		main->plr.p.x = px;
 	}
 }
 
@@ -79,15 +79,15 @@ void	a(t_main *main)
 	float	py;
 	float	px;
 
-	px = main->px;
-	py = main->py;
-	a = fix_ang(main->pa + 90.f);
-	main->px += cosf(deg_to_rad(a)) * SPEED;
-	main->py -= -sinf(deg_to_rad(a)) * SPEED;
-	if (main->map.map[(int)round(main->py)][(int)round(main->px)] == '1')
+	px = main->plr.p.x;
+	py = main->plr.p.y;
+	a = fix_ang(main->plr.a + 90.f);
+	main->plr.p.x += cosf(deg_to_rad(a)) * SPEED;
+	main->plr.p.y -= -sinf(deg_to_rad(a)) * SPEED;
+	if (main->map.map[(int)round(main->plr.p.y)][(int)round(main->plr.p.x)] == '1')
 	{
-		main->py = py;
-		main->px = px;
+		main->plr.p.y = py;
+		main->plr.p.x = px;
 	}
 }
 
@@ -97,32 +97,28 @@ void	d(t_main *main)
 	float	py;
 	float	px;
 
-	px = main->px;
-	py = main->py;
-	a = fix_ang(main->pa - 90.f);
-	main->px += cosf(deg_to_rad(a)) * SPEED;
-	main->py -= -sinf(deg_to_rad(a)) * SPEED;
-	if (main->map.map[(int)round(main->py)][(int)round(main->px)] == '1')
+	px = main->plr.p.x;
+	py = main->plr.p.y;
+	a = fix_ang(main->plr.a - 90.f);
+	main->plr.p.x += cosf(deg_to_rad(a)) * SPEED;
+	main->plr.p.y -= -sinf(deg_to_rad(a)) * SPEED;
+	if (main->map.map[(int)round(main->plr.p.y)][(int)round(main->plr.p.x)] == '1')
 	{
-		main->py = py;
-		main->px = px;
+		main->plr.p.y = py;
+		main->plr.p.x = px;
 	}
 }
 
 void	arrows1(t_main *main)
 {
-	main->pa += 10;
-	main->pa = fix_ang(main->pa);
-	main->dx = cosf(deg_to_rad(main->pa));
-	main->dy = -sinf(deg_to_rad(main->pa));
+	main->plr.a += 10;
+	main->plr.a = fix_ang(main->plr.a);
 }
 
 void	arrows2(t_main *main)
 {
-	main->pa -= 10;
-	main->pa = fix_ang(main->pa);
-	main->dx = cosf(deg_to_rad(main->pa));
-	main->dy = -sinf(deg_to_rad(main->pa));
+	main->plr.a -= 10;
+	main->plr.a = fix_ang(main->plr.a);
 }
 
 int	move(int key, t_main *main)
@@ -141,7 +137,6 @@ int	move(int key, t_main *main)
 		arrows2(main);
 	if (key == 65307)
 		on_destroy(main);
-	//print_map(map);
 	reset_ecran(main);
 	draw_view_line(main);
 	return (1);

@@ -45,6 +45,7 @@
 #define SCREEN_H	1280
 #define FOV 		90
 #define	SPEED		0.1f
+#define SCREEN_SIZE	64.f
 
 typedef struct s_veci
 {
@@ -94,16 +95,19 @@ typedef struct s_map
 	t_clr	ceiling;
 }	t_map;
 
+typedef struct s_ray
+{
+	float	a;
+	t_vecf	p;
+	t_vecf	d;
+	t_vecf	n;
+	t_vecf	dx;
+	t_vecf	dy;
+}	t_ray;
+
 typedef struct s_main
 {
-	int		x;
-	int		y;
-	float	px;
-	float	py;
-	float	pa;
-	float	dx;
-	float	dy;
-	float	fd;
+	t_ray	plr;
 
 	t_map	map;
 
@@ -128,10 +132,10 @@ void	free_main(t_main *main);
 
 /*		draw_rays.c	*/
 void	draw_rays(t_main *map);
-int		draw_line(t_main *main, int x0, int y0, int x1, int y1, int color);
+void	draw_line(t_main *main, t_veci start, t_veci end, int color);
 void    draw_view_line(t_main *main);
 
-void	set_pixel(int color, void *img, int x, int y);
+void	set_pixel(int color, t_txr t, int x, int y);
 
 /*		parsing.c	*/
 int	build_map(void *mlx_ptr, t_map *m, char *file);
@@ -145,5 +149,9 @@ int	read_texture(void *mlx_ptr, t_map *m, char *line);
 int	max(int i1, int i2);
 int	throw_error(int err, char *line);
 void	print_map(t_map *map);
+
+/*		ray.c		*/
+void	whey(t_ray *perso);
+float	dist(t_vecf v);
 
 #endif

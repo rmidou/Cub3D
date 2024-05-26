@@ -28,6 +28,7 @@ C_FILE		=	main.c					\
 				rendering/img.c			\
 				physics/move.c			\
 				rendering/draw_rays.c	\
+				rendering/ray.c			\
 
 SRC_DIR		=	./src/
 
