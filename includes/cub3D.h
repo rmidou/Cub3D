@@ -32,6 +32,7 @@
 #define SCREEN_W	1920
 #define SCREEN_H	1280
 #define FOV 		90
+#define	SPEED		10
 
 typedef struct s_main
 {
