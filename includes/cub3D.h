@@ -64,30 +64,6 @@ typedef struct s_txr
 	t_veci			size;
 }	t_txr;
 
-typedef struct s_main
-{
-	int		x;
-	int		y;
-	int		px;
-	int		py;
-	float		pa;
-	float		dx;
-	float		dy;
-	float		fd;
-	int		widhtmap;
-	int		heightmap;
-	
-	char	**map;
-	char	**buf;
-
-	//t_map	map;
-
-	t_txr	scr;
-
-	void	*mlxptr;
-	void	*winptr;
-}	t_main;
-
 typedef struct s_vecf
 {
 	float	x;
@@ -106,6 +82,7 @@ typedef struct s_map
 {
 	char	*file;
 	char	*data;
+	char	**map;
 	t_veci	size;
 	t_veci	spawn;
 	float	view;
@@ -116,6 +93,30 @@ typedef struct s_map
 	t_clr	floor;
 	t_clr	ceiling;
 }	t_map;
+
+typedef struct s_main
+{
+	int		x;
+	int		y;
+	int		px;
+	int		py;
+	float		pa;
+	float		dx;
+	float		dy;
+	float		fd;
+	int		widhtmap;
+	int		heightmap;
+	
+	char	**map;
+	char	**buf;
+
+	t_map	map;
+
+	t_txr	scr;
+
+	void	*mlxptr;
+	void	*winptr;
+}	t_main;
 
 /*		main.c	*/
 int		on_destroy(t_main *map);
@@ -147,6 +148,7 @@ int	read_color(t_map *m, char *line);
 int	read_texture(void *mlx_ptr, t_map *m, char *line);
 
 /*		error.c		*/
+int	max(int i1, int i2);
 int	throw_error(int err, char *line);
 
 #endif

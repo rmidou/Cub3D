@@ -49,6 +49,56 @@ int	parse_line(void *mlx_ptr, char *line, int *stage, t_map *m)
 	return (ERR_UNKNOWN);
 }
 
+void	get_spawn(t_map *m)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < m->size.y)
+	{
+		x = 0;
+		while (x < m->size.x)
+		{
+			if (ft_strchr("NSEW", m->map[y][x]) != NULL && m->map[y][x])
+				break ;
+			x++;
+		}
+		y++;
+	}
+	m->spawn = (t_veci){.x = x, .y = y};
+	if (m->map[m->spawn.y][m->spawn.x] == 'N')
+		m->view = 0;
+	if (m->map[m->spawn.y][m->spawn.x] == 'S')
+		m->view = 180;
+	if (m->map[m->spawn.y][m->spawn.x] == 'E')
+		m->view = 90;
+	if (m->map[m->spawn.y][m->spawn.x] == 'W')
+		m->view = 270;
+}
+
+void	get_map_specs(t_map *m)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (m->map[y])
+	{
+		x = max(x, ft_strlen(m->map[y]));
+		y++;
+	}
+	m->size = (t_veci){.x = x, .y = y};
+	y = 0;
+	while (m->map[y])
+	{
+		while (ft_strlen(m->map[y]) < x)
+			m->map[y] = str_addc(m->map[y], ' ');
+		y++;
+	}
+	get_spawn(m);
+}
+
 int	build_map(void *mlx_ptr, t_map *m, char *file)
 {
 	int		fd;
@@ -72,5 +122,7 @@ int	build_map(void *mlx_ptr, t_map *m, char *file)
 	close(fd);
 	if (err)
 		return (ERR_PARSING);
+	m->map = ft_split(m->data, '\n');
+	get_map_specs(m);
 	return (OKAY_OKAY);
 }
