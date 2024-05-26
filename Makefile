@@ -1,6 +1,6 @@
 NAME		=	cub3D
 
-CC			=	clang
+CC			=	cc
 
 FLAG		=	-Wall -Wextra -Werror
 
@@ -20,7 +20,14 @@ MLX_LIB		=	$(addprefix $(MLX_PATH), $(MLX_FILE))
 
 MLX_EX		=	$(MLX_LIB) $(MLX_FLAG)
 
-C_FILE		=	main.c parsing/map.c rendering/img.c physics/move.c rendering/draw_rays.c \
+C_FILE		=	main.c					\
+				parsing/map.c			\
+				parsing/parsing.c		\
+				parsing/parsing2.c		\
+				parsing/error.c			\
+				rendering/img.c			\
+				physics/move.c			\
+				rendering/draw_rays.c	\
 
 SRC_DIR		=	./src/
 

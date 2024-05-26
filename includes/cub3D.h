@@ -26,8 +26,20 @@
 #define LN_TYPE_MAP		3
 #define LN_TYPE_UNDEF	4
 
-#define OK			0
-#define ERR_OPEN	1
+#define OKAY_OKAY				0
+#define ERR_OPEN				1
+#define ERR_NOFILE				2
+#define ERR_LOADTEX				3
+#define ERR_NOCLR				4
+#define ERR_SYNTAX				5
+#define ERR_NO_DATA_EXPECTED	6
+#define ERR_UNKNOWN				7
+#define ERR_OUT_OF_BOUNDS		8
+#define ERR_PARSING				9
+
+#define STAGE_DATA	0
+#define STAGE_MAP	1
+#define STAGE_DONE	2
 
 #define SCREEN_W	1920
 #define SCREEN_H	1280
@@ -90,11 +102,10 @@ typedef struct s_txr
 
 typedef struct s_clr
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	int				color_i;
-	char			color_c[4];
+	int	r;
+	int	g;
+	int	b;
+	int	color_i;
 }	t_clr;
 
 typedef struct s_map
@@ -109,7 +120,7 @@ typedef struct s_map
 	t_txr	e;
 	t_txr	w;
 	t_clr	floor;
-	t_clr	cieling;
+	t_clr	ceiling;
 }	t_map;
 
 /*		main.c	*/
@@ -136,4 +147,16 @@ int		draw_line(t_main *main, int x0, int y0, int x1, int y1, int color);
 void    draw_view_line(t_main *main);
 
 void	set_pixel(int color, void *img, int x, int y);
+
+/*		parsing.c	*/
+int	build_map(void *mlx_ptr, t_map *m, char *file);
+
+/*		parsing2.c	*/
+int	read_mapline(t_map *m, char *line);
+int	read_color(t_map *m, char *line);
+int	read_texture(void *mlx_ptr, t_map *m, char *line);
+
+/*		error.c		*/
+int	throw_error(int err, char *line);
+
 #endif

@@ -19,6 +19,7 @@ int	main(int ac, char **av)
 	if (ac < 2)
 		return (0);
 	map.mlxptr = mlx_init();
+	build_map(map.mlxptr, map.map, "maps/map_subject.cub");
 	map.winptr = mlx_new_window(map.mlxptr, SCREEN_W, SCREEN_H, "cub3D");
 	map.img = mlx_new_image(map.mlxptr, SCREEN_W, SCREEN_H);
 	map.px = 150;
