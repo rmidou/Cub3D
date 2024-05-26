@@ -104,11 +104,6 @@ typedef struct s_main
 	float		dx;
 	float		dy;
 	float		fd;
-	int		widhtmap;
-	int		heightmap;
-	
-	char	**map;
-	char	**buf;
 
 	t_map	map;
 
