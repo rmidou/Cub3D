@@ -18,6 +18,17 @@
 #define BLUE_PIXEL	0x77B5FE
 #define PI			3.141592f
 
+#define MAP_CHARS	" 10NSEW"
+
+#define	LN_TYPE_EMPTY	0
+#define LN_TYPE_TXR		1
+#define LN_TYPE_CLR		2
+#define LN_TYPE_MAP		3
+#define LN_TYPE_UNDEF	4
+
+#define OK			0
+#define ERR_OPEN	1
+
 #define SCREEN_W	1920
 #define SCREEN_H	1280
 #define FOV 		90
