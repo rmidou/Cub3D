@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rmidou <rmidou@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 13:48:11 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/25 17:27:38 by rmidou           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -25,15 +12,15 @@
 # include <fcntl.h>
 # include <math.h>
 
-#define RED_PIXEL 0xFF0000
+#define RED_PIXEL	0xFF0000
 #define BLACK_PIXEL 0x000000
 #define WHITE_PIXEL 0xFFFFFF
-#define BLUE_PIXEL 0x77B5FE
+#define BLUE_PIXEL	0x77B5FE
 #define PI			3.141592f
 
 #define SCREEN_W	1920
 #define SCREEN_H	1280
-#define FOV			90
+#define FOV 		90
 
 typedef struct s_main
 {
@@ -90,6 +77,15 @@ typedef struct s_txr
 	t_veci			size;
 }	t_txr;
 
+typedef struct s_clr
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	int				color_i;
+	char			color_c[4];
+}	t_clr;
+
 typedef struct s_map
 {
 	char	*file;
@@ -97,6 +93,12 @@ typedef struct s_map
 	t_veci	size;
 	t_veci	spawn;
 	float	view;
+	t_txr	n;
+	t_txr	s;
+	t_txr	e;
+	t_txr	w;
+	t_clr	floor;
+	t_clr	cieling;
 }	t_map;
 
 /*		main.c	*/
