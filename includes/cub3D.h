@@ -122,8 +122,7 @@ int		move(int key, t_main *map);
 int		fix_ang(int a);
 
 /*		map.c	*/
-void	free_map(t_main *map);
-int		read_map(t_main *map, char *av);
+void	free_main(t_main *main);
 
 /*		img.c	*/
 
@@ -145,5 +144,6 @@ int	read_texture(void *mlx_ptr, t_map *m, char *line);
 /*		error.c		*/
 int	max(int i1, int i2);
 int	throw_error(int err, char *line);
+void	print_map(t_map *map);
 
 #endif

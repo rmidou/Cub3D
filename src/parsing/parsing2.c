@@ -1,4 +1,4 @@
-#include "../includes/cub3D.h"
+#include "../../includes/cub3D.h"
 
 int	load_tex(void *mlx_ptr, t_txr *t)
 {
@@ -29,7 +29,7 @@ int	read_texture(void *mlx_ptr, t_map *m, char *line)
 		return (ERR_NOFILE);
 	if (line[ft_strlen(line) - 1] == '\n')
 		line[ft_strlen(line) - 1] = '\0';
-	t->file = str_adds(NULL, line, ft_strlen(line));
+	t->file = str_adds(NULL, &(line[i]), ft_strlen(line));
 	return (load_tex(mlx_ptr, t));
 }
 

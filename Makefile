@@ -38,7 +38,7 @@ SRC			=	$(addprefix $(SRC_DIR),$(C_FILE))
 OBJ			=	$(SRC:.c=.o)
 
 .c.o:
-	$(CC) $(FLAG) -c $< -o $@
+	$(CC) $(FLAG) -g3 -c $< -o $@
 
 all: $(NAME)
 
@@ -54,7 +54,7 @@ mlx:
 
 $(NAME): lib mlx $(OBJ)
 	@echo "\033[0;33m\nCOMPILING CUB3D...\n"
-	$(CC) $(OBJ) $(LIBFT_LIB) $(MLX_EX) -lm -o $(NAME)
+	$(CC) $(OBJ) -g3 $(LIBFT_LIB) $(MLX_EX) -lm -o $(NAME)
 	@echo "\033[1;32m./cub3D created\n"
 
 clean:

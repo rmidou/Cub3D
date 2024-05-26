@@ -40,6 +40,8 @@ int	parse_line(void *mlx_ptr, char *line, int *stage, t_map *m)
 		*stage = STAGE_DONE;
 	if (*stage == STAGE_DATA && out == LN_TYPE_MAP)
 		*stage = STAGE_MAP;
+	if (out == LN_TYPE_EMPTY)
+		return (OKAY_OKAY);
 	if (out == LN_TYPE_TXR)
 		return (read_texture(mlx_ptr, m, line));
 	if (out == LN_TYPE_CLR)
@@ -61,12 +63,11 @@ void	get_spawn(t_map *m)
 		while (x < m->size.x)
 		{
 			if (ft_strchr("NSEW", m->map[y][x]) != NULL && m->map[y][x])
-				break ;
+				m->spawn = (t_veci){x, y};
 			x++;
 		}
 		y++;
 	}
-	m->spawn = (t_veci){.x = x, .y = y};
 	if (m->map[m->spawn.y][m->spawn.x] == 'N')
 		m->view = 0;
 	if (m->map[m->spawn.y][m->spawn.x] == 'S')
@@ -83,6 +84,7 @@ void	get_map_specs(t_map *m)
 	int	y;
 
 	y = 0;
+	x = 0;
 	while (m->map[y])
 	{
 		x = max(x, ft_strlen(m->map[y]));

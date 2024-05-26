@@ -70,7 +70,7 @@ void    draw_view_line(t_main *main)
 		line_length = 1;
 		x1 = main->px + cosf(deg_to_rad(main->pa + para) - PI);
 		y1 = main->py + sinf(deg_to_rad(main->pa + para) - PI);
-		while (main->map[(int)round(y1/64)][(int)round(x1/64)] != '1')
+		while (main->map.map[(int)round(y1/64)][(int)round(x1/64)] == '0')
 		{
 			line_length++;
 			x1 = main->px + (cosf(deg_to_rad(main->pa + para) - PI) * line_length);

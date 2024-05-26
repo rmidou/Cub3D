@@ -1,68 +1,28 @@
 #include "../../includes/cub3D.h"
 
-void	free_map(t_main *map)
+void	free2(void *ptr)
 {
-	int	i;
-
-	i = 0;
-	while (map->map[i])
-	{
-		free(map->map[i]);
-		i++;
-	}
-	free(map->map);
-	i = 0;
-	while (map->buf[i])
-	{
-		free(map->buf[i]);
-		i++;
-	}
-	free(map->buf);
+	if (ptr != NULL)
+		free(ptr);
 }
 
-void	nb_ligne(t_main *map, char *av)
+void	free_txr(void *mlxptr, t_txr *t)
 {
-	int		i;
-	char	*ligne;
-
-	ligne = get_next_line(map->fd);
-	free(ligne);
-	i = 0;
-	while (ligne)
-	{
-		ligne = get_next_line(map->fd);
-		free(ligne);
-		i++;
-	}
-	if (map->fd != -1)
-		close(map->fd);
-	map->fd = open(av, O_RDONLY);
-	map->heightmap = i;
+	free2(t->file);
+	if (t->img != NULL)
+		mlx_destroy_image(mlxptr, t->img);
+	ft_bzero(t, sizeof(t));
 }
 
-int	read_map(t_main *map, char *av)
+void	free_map(void *mlxptr, t_map *m)
 {
-	char	*ligne;
-	int		y;
+	free_txr(mlxptr, &(m->n));
+	free_txr(mlxptr, &(m->s));
+	free_txr(mlxptr, &(m->e));
+	free_txr(mlxptr, &(m->w));
+}
 
-	y = 0;
-	if (av == NULL)
-		return (0);
-	map->fd = open(av, O_RDONLY);
-	nb_ligne(map, av);
-	ligne = get_next_line(map->fd);
-	map->map = malloc(sizeof(char *) * (map->heightmap + 1));
-	map->buf = malloc(sizeof(char *) * (map->heightmap + 1));
-	while (ligne)
-	{
-		map->map[y] = ligne;
-		map->buf[y] = ft_strdup(ligne);
-		ligne = get_next_line(map->fd);
-		y++;
-	}
-	map->map[y] = NULL;
-	map->buf[y] = NULL;
-	if (map->fd != -1)
-		close(map->fd);
-	return (1);
+void	free_main(t_main *main)
+{
+	free_map(main->mlxptr, &(main->map));
 }

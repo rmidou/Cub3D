@@ -1,10 +1,19 @@
-#include "../includes/cub3D.h"
+#include "../../includes/cub3D.h"
 
 int	max(int i1, int i2)
 {
 	if (i1 > i2)
 		return (i1);
 	return (i2);
+}
+
+void	print_map(t_map *map)
+{
+	int	i;
+
+	i = -1;
+	while (map->map[++i])
+		ft_printf("|%s|\n", map->map[i]);
 }
 
 int	throw_error(int err, char *line)
@@ -25,7 +34,7 @@ int	throw_error(int err, char *line)
 	if (err == ERR_NO_DATA_EXPECTED)
 		ft_printf("No data expected after map:\n%s\n");
 	if (err == ERR_UNKNOWN)
-		ft_printf("Unkown identifier:\n%s\n", line);
+		ft_printf("Unkown identifier:\n[%s]\n", line);
 	if (err == ERR_OUT_OF_BOUNDS)
 		ft_printf("Color data must be contained within [0-255]:\n%s\n", line);
 	return (1);
