@@ -6,11 +6,9 @@
 /*   By: larz <larz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 13:48:11 by rmidou            #+#    #+#             */
-/*   Updated: 2024/05/25 17:10:24 by larz             ###   ########.fr       */
+/*   Updated: 2024/05/26 14:38:26 by larz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -25,11 +23,22 @@
 # include <fcntl.h>
 # include <math.h>
 
-#define RED_PIXEL 0xFF0000
+#define RED_PIXEL	0xFF0000
 #define BLACK_PIXEL 0x000000
 #define WHITE_PIXEL 0xFFFFFF
-#define BLUE_PIXEL 0x77B5FE
+#define BLUE_PIXEL	0x77B5FE
 #define PI			3.141592f
+
+#define MAP_CHARS	" 10NSEW"
+
+#define	LN_TYPE_EMPTY	0
+#define LN_TYPE_TXR		1
+#define LN_TYPE_CLR		2
+#define LN_TYPE_MAP		3
+#define LN_TYPE_UNDEF	4
+
+#define OK			0
+#define ERR_OPEN	1
 
 #define SCREEN_W = 640
 #define SCREEN_H = 480
@@ -90,6 +99,15 @@ typedef struct s_txr
 	t_veci			size;
 }	t_txr;
 
+typedef struct s_clr
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	int				color_i;
+	char			color_c[4];
+}	t_clr;
+
 typedef struct s_map
 {
 	char	*file;
@@ -97,6 +115,12 @@ typedef struct s_map
 	t_veci	size;
 	t_veci	spawn;
 	float	view;
+	t_txr	n;
+	t_txr	s;
+	t_txr	e;
+	t_txr	w;
+	t_clr	floor;
+	t_clr	cieling;
 }	t_map;
 
 /*		main.c	*/
