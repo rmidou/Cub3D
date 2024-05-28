@@ -1,5 +1,17 @@
 #include "../../includes/cub3D.h"
 
+char	get_block2(t_main *main, t_vecf p)
+{
+	t_veci	i;
+
+	i.x = (int)floorf(p.x);
+	i.y = (int)floorf(p.y);
+	if (i.y < 0.f || i.y >= main->map.size.y
+		|| i.x < 0.f || i.x >= main->map.size.x)
+		return ('1');
+	return (main->map.map[i.y][i.x]);
+}
+
 void	free2(void *ptr)
 {
 	if (ptr != NULL)

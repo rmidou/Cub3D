@@ -27,9 +27,10 @@ C_FILE		=	main.c					\
 				parsing/parsing2.c		\
 				parsing/error.c			\
 										\
-				physics/move.c			\
+				physics/movement.c		\
 				physics/angles.c		\
 				physics/vectors.c		\
+				physics/vectors2.c		\
 										\
 				rendering/img.c			\
 				rendering/draw_rays.c	\

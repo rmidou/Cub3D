@@ -55,8 +55,10 @@ int read_color_data(t_clr *c, char *line)
 		i++;
 	if (line[i] != '\n' && line[i] != '\0')
 		return (ERR_SYNTAX);
-	c->color_i = 0xFFFFFF & ((char)c->r << 24 | (char)c->g << 16 | (char)c->r << 8);
-	if (c->r < 0 || c->r > 255 || c->g < 0 || c->g > 255 || c->b < 0 || c->b > 255)
+	c->color_i = rgb(255, c->r, c->g, c->b);
+	if (c->r < 0 || c->r > 255
+		|| c->g < 0 || c->g > 255
+		|| c->b < 0 || c->b > 255)
 		return (ERR_OUT_OF_BOUNDS);
 	return (OKAY_OKAY);
 }

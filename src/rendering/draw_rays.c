@@ -1,40 +1,20 @@
 #include "../../includes/cub3D.h"
 
-void	draw_3d(t_main *main, int x, float len, t_ray r)
+void	draw_3d(t_main *main, int x, t_ray r)
 {
 	int		i;
-	t_clr	clrn;
-	t_clr	clrs;
-	t_clr	clre;
-	t_clr	clrw;
-	float	h;
-	float	l;
+	t_clr	c;
+	float	len;
 
 	i = x;
-	h = SCREEN_DIST / (2.f * len);
-	l = 1.f - (1.f / (RENDER_DIST / len));
-	if (l <= 0.f)
-		return ;
-		//l = 0.f;
-	len = (SCREEN_H / 2) * (h / SH) * 2.f;
-	if (len > SCREEN_H)
-		len = SCREEN_H;
-	clrn = color(255.f * l, 0.00f * l, 0.00f * l);
-	clrs = color(0.00f * l, 0.00f * l, 255.f * l);
-	clre = color(0.00f * l, 255.f * l, 0.00f * l);
-	clrw = color(255.f * l, 0.00f * l, 255.f * l);
-	if (r.hit == HIT_S)
-		clrn = clrs;
-	if (r.hit == HIT_E)
-		clrn = clre;
-	if (r.hit == HIT_W)
-		clrn = clrw;
+	len = get_line_height(main, r);
+	c = get_hit_color(main, r);
 	while (i < x + COL_W)
 	{
 		draw_line(main,
 			(t_veci){i, (SCREEN_H / 2) - len / 2},
 			(t_veci){i, (SCREEN_H / 2) + len / 2},
-			clrn.color_i);
+			c.color_i);
 		i++;
 	}
 }
@@ -95,9 +75,7 @@ void	shoot_rays(t_main *main)
 		}
 		get_hit(&r);
 		if (out_of_bounds(main, r.p))
-			draw_3d(main, col_index * COL_W,
-				sqrtf(powf(r.p.x - main->plr.p.x, 2)
-					+ powf(r.p.y - main->plr.p.y, 2)), r);
+			draw_3d(main, col_index * COL_W, r);
 	}
 	mlx_put_image_to_window(main->mlxptr, main->winptr, main->scr.img, 0, 0);
 }

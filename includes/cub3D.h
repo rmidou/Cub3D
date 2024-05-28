@@ -53,16 +53,13 @@
 # define STAGE_MAP	1
 # define STAGE_DONE	2
 
-# define SCREEN_W	1920
-# define SCREEN_H	1080
-# define FOV 		90
+# define SCREEN_W		1920.f
+# define SCREEN_H		1080.f
+# define FOV 			90.f
 # define RENDER_DIST	8.f
 # define SCREEN_DIST	1.f
-# define AR			((float)SCREEN_W / (float)SCREEN_H)
-# define SW			((float)SCREEN_DIST / tanf(to_rad(90.f - (FOV / 2.f))))
-# define SH			(SW / AR)
-# define COL_W		1
-# define SPEED		0.25f
+# define COL_W			1
+# define SPEED			0.25f
 # define SCREEN_SIZE	64.f
 
 typedef struct s_veci
@@ -146,29 +143,31 @@ int		rgb(int t, int r, int g, int b);
 
 /*		map.c	*/
 void	free_main(t_main *main);
+char	get_block2(t_main *main, t_vecf p);
 
 /*		img.c	*/
 void	draw_line(t_main *main, t_veci start, t_veci end, int color);
+void	reset_screen(t_main *main);
 
 /*		draw_rays.c	*/
 void	draw_rays(t_main *map);
 void	draw_line(t_main *main, t_veci start, t_veci end, int color);
-void    shoot_rays(t_main *main);
+void	shoot_rays(t_main *main);
 char	get_block(t_main *main, t_ray r);
 
 void	set_pixel(int color, t_txr t, int x, int y);
 
 /*		parsing.c	*/
-int	build_map(void *mlx_ptr, t_map *m, char *file);
+int		build_map(void *mlx_ptr, t_map *m, char *file);
 
 /*		parsing2.c	*/
-int	read_mapline(t_map *m, char *line);
-int	read_color(t_map *m, char *line);
-int	read_texture(void *mlx_ptr, t_map *m, char *line);
+int		read_mapline(t_map *m, char *line);
+int		read_color(t_map *m, char *line);
+int		read_texture(void *mlx_ptr, t_map *m, char *line);
 
 /*		error.c		*/
-int	max(int i1, int i2);
-int	throw_error(int err, char *line);
+int		max(int i1, int i2);
+int		throw_error(int err, char *line);
 void	print_map(t_map *map);
 
 /*		ray.c		*/
@@ -179,11 +178,15 @@ void	init_dir2(t_ray *r);
 
 /*		color.c		*/
 t_clr	color(int r, int g, int b);
+t_clr	get_hit_color(t_main *m, t_ray r);
+t_clr	scale_clr(t_clr c, float f);
 
 /*		angles.c	*/
+t_vecf	ang_to_vecf(float a);
 float	fix_ang(float a);
 float	to_rad(float a);
 float	to_deg(float a);
+t_vecf	rotate(t_vecf v, float a);
 
 /*		vectors.c	*/
 t_vecf	vecf(float x, float y);
@@ -191,5 +194,9 @@ float	dist(t_vecf v);
 t_vecf	norm(t_vecf v);
 t_vecf	add(t_vecf u, t_vecf v);
 t_vecf	sub(t_vecf u, t_vecf v);
+
+/*		vectors2.c	*/
+t_vecf	scale(t_vecf v, float f);
+int		get_line_height(t_main *m, t_ray r);
 
 #endif
