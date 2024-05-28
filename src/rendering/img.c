@@ -20,3 +20,30 @@ void	set_pixel(int color, t_txr t, int x, int y)
 		t.data[pixel + 3] = (color >> 24);
 	}
 }
+
+void	draw_line(t_main *main, t_veci start, t_veci end, int color)
+{
+	int		i;
+	int		steps;
+	t_veci	d;
+	t_vecf	inc;
+	t_veci	pos;
+
+	d.x = end.x - start.x;
+	d.y = end.y - start.y;
+	steps = abs(d.y);
+	if (abs(d.x) > abs(d.y))
+		steps = abs(d.x);
+	inc.x = d.x / (float)steps;
+	inc.y = d.y / (float)steps;
+	pos.x = start.x;
+	pos.y = start.y;
+	i = 0;
+	while (i <= steps)
+	{
+		set_pixel(color, main->scr, round(pos.x), round(pos.y));
+		pos.x += inc.x;
+		pos.y += inc.y;
+		i++;
+	}
+}

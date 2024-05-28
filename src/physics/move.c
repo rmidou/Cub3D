@@ -1,29 +1,5 @@
 #include "../../includes/cub3D.h"
 
-float	deg_to_rad(float a)
-{
-	return ((a * PI) / 180.f);
-}
-
-float	rad_to_deg(float a)
-{
-	return ((a * 180.f) / PI);
-}
-
-int	rgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-float	fix_ang(float a)
-{
-	if (a < 0.f)
-		a += 360.f;
-	if (a > 360.f)
-		a -= 360.f;
-	return (a);
-}
-
 void	reset_ecran(t_main *main)
 {
 	int	y;
@@ -54,8 +30,8 @@ void	s(t_main *main)
 
 	px = main->plr.p.x;
 	py = main->plr.p.y;
-	main->plr.p.x -= cosf(deg_to_rad(main->plr.a)) * SPEED;
-	main->plr.p.y -= sinf(deg_to_rad(main->plr.a)) * SPEED;
+	main->plr.p.x -= cosf(to_rad(main->plr.a)) * SPEED;
+	main->plr.p.y -= sinf(to_rad(main->plr.a)) * SPEED;
 	if (get_block(main, main->plr) == '1')
 	{
 		main->plr.p.y = py;
@@ -70,8 +46,8 @@ void	w(t_main *main)
 
 	px = main->plr.p.x;
 	py = main->plr.p.y;
-	main->plr.p.x += cosf(deg_to_rad(main->plr.a)) * SPEED;
-	main->plr.p.y += sinf(deg_to_rad(main->plr.a)) * SPEED;
+	main->plr.p.x += cosf(to_rad(main->plr.a)) * SPEED;
+	main->plr.p.y += sinf(to_rad(main->plr.a)) * SPEED;
 	if (get_block(main, main->plr) == '1')
 	{
 		main->plr.p.y = py;
@@ -88,8 +64,8 @@ void	d(t_main *main)
 	px = main->plr.p.x;
 	py = main->plr.p.y;
 	a = fix_ang(main->plr.a + 90.f);
-	main->plr.p.x += cosf(deg_to_rad(a)) * SPEED;
-	main->plr.p.y -= -sinf(deg_to_rad(a)) * SPEED;
+	main->plr.p.x += cosf(to_rad(a)) * SPEED;
+	main->plr.p.y -= -sinf(to_rad(a)) * SPEED;
 	if (get_block(main, main->plr) == '1')
 	{
 		main->plr.p.y = py;
@@ -106,8 +82,8 @@ void	a(t_main *main)
 	px = main->plr.p.x;
 	py = main->plr.p.y;
 	a = fix_ang(main->plr.a - 90.f);
-	main->plr.p.x += cosf(deg_to_rad(a)) * SPEED;
-	main->plr.p.y -= -sinf(deg_to_rad(a)) * SPEED;
+	main->plr.p.x += cosf(to_rad(a)) * SPEED;
+	main->plr.p.y -= -sinf(to_rad(a)) * SPEED;
 	if (get_block(main, main->plr) == '1')
 	{
 		main->plr.p.y = py;
@@ -144,6 +120,6 @@ int	move(int key, t_main *main)
 	if (key == 65307)
 		on_destroy(main);
 	reset_ecran(main);
-	draw_view_line(main);
+	shoot_rays(main);
 	return (1);
 }

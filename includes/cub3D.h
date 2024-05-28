@@ -13,52 +13,57 @@
 # include <fcntl.h>
 # include <math.h>
 
-#define RED_PIXEL	0xFF0000
-#define BLACK_PIXEL 0x000000
-#define WHITE_PIXEL 0xFFFFFF
-#define BLUE_PIXEL	0x77B5FE
-#define PI			3.141592f
-#define	OFFSET		-0.f
+# define RED_PIXEL	0xFF0000
+# define BLACK_PIXEL 0x000000
+# define WHITE_PIXEL 0xFFFFFF
+# define BLUE_PIXEL	0x77B5FE
+# define PI			3.141592f
+# define OFFSET		-0.f
 
-#define CEIL	0
-#define FLOOR	1
-#define X_		0
-#define Y_		1
+# define CEIL	0
+# define FLOOR	1
+# define X_		0
+# define Y_		1
 
-#define MAP_CHARS	" 10NSEW"
+# define HIT_N	0
+# define HIT_S	1
+# define HIT_E	2
+# define HIT_W	3
 
-#define	LN_TYPE_EMPTY	0
-#define LN_TYPE_TXR		1
-#define LN_TYPE_CLR		2
-#define LN_TYPE_MAP		3
-#define LN_TYPE_UNDEF	4
+# define MAP_CHARS	" 10NSEW"
 
-#define OKAY_OKAY				0
-#define ERR_OPEN				1
-#define ERR_NOFILE				2
-#define ERR_LOADTEX				3
-#define ERR_NOCLR				4
-#define ERR_SYNTAX				5
-#define ERR_NO_DATA_EXPECTED	6
-#define ERR_UNKNOWN				7
-#define ERR_OUT_OF_BOUNDS		8
-#define ERR_PARSING				9
+# define LN_TYPE_EMPTY		0
+# define LN_TYPE_TXR		1
+# define LN_TYPE_CLR		2
+# define LN_TYPE_MAP		3
+# define LN_TYPE_UNDEF		4
 
-#define STAGE_DATA	0
-#define STAGE_MAP	1
-#define STAGE_DONE	2
+# define OKAY_OKAY				0
+# define ERR_OPEN				1
+# define ERR_NOFILE				2
+# define ERR_LOADTEX			3
+# define ERR_NOCLR				4
+# define ERR_SYNTAX				5
+# define ERR_NO_DATA_EXPECTED	6
+# define ERR_UNKNOWN			7
+# define ERR_OUT_OF_BOUNDS		8
+# define ERR_PARSING			9
 
-#define SCREEN_W	1920
-#define SCREEN_H	1280
-#define FOV 		90
-#define RENDER_DIST	30.f
-#define SCREEN_DIST	.25f
-#define AR			((float)SCREEN_W / (float)SCREEN_H)
-#define SW			((float)SCREEN_DIST / tanf(deg_to_rad(90.f - (FOV / 2.f))))
-#define SH			(SW / AR)
-#define COL_W		10
-#define	SPEED		0.1f
-#define SCREEN_SIZE	64.f
+# define STAGE_DATA	0
+# define STAGE_MAP	1
+# define STAGE_DONE	2
+
+# define SCREEN_W	1920
+# define SCREEN_H	1080
+# define FOV 		90
+# define RENDER_DIST	8.f
+# define SCREEN_DIST	1.f
+# define AR			((float)SCREEN_W / (float)SCREEN_H)
+# define SW			((float)SCREEN_DIST / tanf(to_rad(90.f - (FOV / 2.f))))
+# define SH			(SW / AR)
+# define COL_W		1
+# define SPEED		0.25f
+# define SCREEN_SIZE	64.f
 
 typedef struct s_veci
 {
@@ -111,6 +116,7 @@ typedef struct s_map
 typedef struct s_ray
 {
 	int		index;
+	int		hit;
 	float	a;
 	t_vecf	p;
 	t_vecf	d;
@@ -135,21 +141,19 @@ typedef struct s_main
 int		on_destroy(t_main *map);
 
 /*		move.c	*/
-float	deg_to_rad(float a);
-float	rad_to_deg(float a);
 int		move(int key, t_main *map);
-float	fix_ang(float a);
-int	rgb(int t, int r, int g, int b);
+int		rgb(int t, int r, int g, int b);
 
 /*		map.c	*/
 void	free_main(t_main *main);
 
 /*		img.c	*/
+void	draw_line(t_main *main, t_veci start, t_veci end, int color);
 
 /*		draw_rays.c	*/
 void	draw_rays(t_main *map);
 void	draw_line(t_main *main, t_veci start, t_veci end, int color);
-void    draw_view_line(t_main *main);
+void    shoot_rays(t_main *main);
 char	get_block(t_main *main, t_ray r);
 
 void	set_pixel(int color, t_txr t, int x, int y);
@@ -172,5 +176,20 @@ void	whey(t_ray *ray);
 float	dist(t_vecf v);
 void	init_dir(t_ray *r);
 void	init_dir2(t_ray *r);
+
+/*		color.c		*/
+t_clr	color(int r, int g, int b);
+
+/*		angles.c	*/
+float	fix_ang(float a);
+float	to_rad(float a);
+float	to_deg(float a);
+
+/*		vectors.c	*/
+t_vecf	vecf(float x, float y);
+float	dist(t_vecf v);
+t_vecf	norm(t_vecf v);
+t_vecf	add(t_vecf u, t_vecf v);
+t_vecf	sub(t_vecf u, t_vecf v);
 
 #endif

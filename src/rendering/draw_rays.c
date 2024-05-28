@@ -1,88 +1,40 @@
 #include "../../includes/cub3D.h"
 
-void	draw_line(t_main *main, t_veci start, t_veci end, int color)
+void	draw_3d(t_main *main, int x, float len, t_ray r)
 {
 	int		i;
-	t_veci	d;
-    int 	steps;
-	t_vecf	inc;
-	t_veci	pos;
-
-	d.x = end.x - start.x;
-	d.y = end.y - start.y;
-	steps = abs(d.x) > abs(d.y) ? abs(d.x) : abs(d.y); 
-    inc.x = d.x / (float)steps; 
-    inc.y = d.y / (float)steps; 
-    pos.x = start.x; 
-    pos.y = start.y;
-	i = 0;
-	while (i <= steps)
-	{
-		set_pixel(color, main->scr, round(pos.x), round(pos.y));
-        pos.x += inc.x;
-        pos.y += inc.y;
-		i++;
-	}
-}
-
-// int    draw_line(t_main *main, int x0, int y0, int x1, int y1, int color)
-// {
-// 	int dx;
-// 	int dy;
-// 	int sx;
-// 	int sy;
-// 	int err;
-// 	int e2;
-// 	int	tt;
-
-// 	tt = 0;
-// 	dx = abs(x1 - x0);
-// 	dy = -abs(y1 - y0);
-// 	sx = (x0 < x1) ? 1 : -1;
-// 	sy = (y0 < y1) ? 1 : -1;
-// 	err = dx + dy;
-// 	while (1)
-// 	{
-// 		set_pixel(color, main->img, x0, y0);
-// 		// voir le so long de jules
-// 		tt += 1;
-// 	    if (x0 == x1 && y0 == y1)
-// 			break;
-// 	    e2 = 2 * err;
-// 	    if (e2 >= dy)
-// 		{
-// 	        err += dy;
-// 	        x0 += sx;
-// 	    }
-// 	    if (e2 <= dx)
-// 		{
-// 	        err += dx;
-// 	        y0 += sy;
-// 	    }
-// 	}
-// 	return (tt);
-// }
-
-void	draw_3D(t_main *main, int x, float len)
-{
-	int		i;
-	int		red;
-	int		grn;
-	int		blu;
+	t_clr	clrn;
+	t_clr	clrs;
+	t_clr	clre;
+	t_clr	clrw;
 	float	h;
+	float	l;
 
 	i = x;
 	h = SCREEN_DIST / (2.f * len);
+	l = 1.f - (1.f / (RENDER_DIST / len));
+	if (l <= 0.f)
+		return ;
+		//l = 0.f;
 	len = (SCREEN_H / 2) * (h / SH) * 2.f;
 	if (len > SCREEN_H)
 		len = SCREEN_H;
-	red = (unsigned char)(150.f * (1.f - (RENDER_DIST / len)));
-	grn = (unsigned char)(100.f * (1.f - (RENDER_DIST / len)));
-	blu = (unsigned char)(255.f * (1.f - (RENDER_DIST / len)));
-
+	clrn = color(255.f * l, 0.00f * l, 0.00f * l);
+	clrs = color(0.00f * l, 0.00f * l, 255.f * l);
+	clre = color(0.00f * l, 255.f * l, 0.00f * l);
+	clrw = color(255.f * l, 0.00f * l, 255.f * l);
+	if (r.hit == HIT_S)
+		clrn = clrs;
+	if (r.hit == HIT_E)
+		clrn = clre;
+	if (r.hit == HIT_W)
+		clrn = clrw;
 	while (i < x + COL_W)
 	{
-		draw_line(main, (t_veci){i, (SCREEN_H / 2) - len / 2}, (t_veci){i, (SCREEN_H / 2) + len / 2}, rgb(255, red, grn, blu));
+		draw_line(main,
+			(t_veci){i, (SCREEN_H / 2) - len / 2},
+			(t_veci){i, (SCREEN_H / 2) + len / 2},
+			clrn.color_i);
 		i++;
 	}
 }
@@ -98,7 +50,7 @@ char	get_block(t_main *main, t_ray r)
 	if (r.p.y == floorf(r.p.y) && r.d.y < .0f)
 		i.y--;
 	if (i.y < 0.f || i.y >= main->map.size.y
-	||	i.x < 0.f || i.x >= main->map.size.x)
+		|| i.x < 0.f || i.x >= main->map.size.x)
 		return ('1');
 	return (main->map.map[i.y][i.x]);
 }
@@ -106,30 +58,28 @@ char	get_block(t_main *main, t_ray r)
 int	out_of_bounds(t_main *main, t_vecf p)
 {
 	if (p.x < 0.f || p.x > main->map.size.x
-	|| p.y < 0.f || p.y > main->map.size.y)
+		|| p.y < 0.f || p.y > main->map.size.y)
 		return (0);
 	return (1);
 }
 
-int	get_height(t_main *m, t_vecf p)
+void	get_hit(t_ray *r)
 {
-	(void)m;
-	(void)p;
-	return (0);
+	if (r->p.x == floorf(r->p.x) && r->d.x < 0.f)
+		r->hit = HIT_E;
+	else if (r->p.x == floorf(r->p.x))
+		r->hit = HIT_W;
+	else if (r->p.y == floorf(r->p.y) && r->d.y < 0.f)
+		r->hit = HIT_N;
+	else
+		r->hit = HIT_S;
 }
 
-void    draw_view_line(t_main *main)
+void	shoot_rays(t_main *main)
 {
-	// float x1;
-	// float y1;
-	//float	para;
 	int		col_index;
-	//int	tt;
-	//int	ca;
-	t_ray r;
+	t_ray	r;
 
-	// CHANGER MODE DE CALCUL DES RAYONS
-	//para = -45.f;
 	col_index = -1;
 	while (++col_index < (SCREEN_W / COL_W))
 	{
@@ -143,10 +93,11 @@ void    draw_view_line(t_main *main)
 			whey(&r);
 			r.p = r.n;
 		}
-		//draw_line(main, main->px, main->py, x1, y1, RED_PIXEL);
-		//ca = fix_ang(main->pa - (main->pa + para));
+		get_hit(&r);
 		if (out_of_bounds(main, r.p))
-			draw_3D(main, col_index * COL_W, sqrtf(powf(r.p.x - main->plr.p.x, 2) + powf(r.p.y - main->plr.p.y, 2)));
+			draw_3d(main, col_index * COL_W,
+				sqrtf(powf(r.p.x - main->plr.p.x, 2)
+					+ powf(r.p.y - main->plr.p.y, 2)), r);
 	}
 	mlx_put_image_to_window(main->mlxptr, main->winptr, main->scr.img, 0, 0);
 }
