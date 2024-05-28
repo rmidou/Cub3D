@@ -2,19 +2,25 @@
 
 float	deg_to_rad(float a)
 {
-	return (a * PI / 180.0f);
+	return ((a * PI) / 180.f);
 }
 
-int	fix_ang(int a)
+float	rad_to_deg(float a)
 {
-	if (a > 359)
-	{
-		a -= 360;
-	}
-	if (a < 0)
-	{
-		a += 360;
-	}
+	return ((a * 180.f) / PI);
+}
+
+int	rgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+float	fix_ang(float a)
+{
+	if (a < 0.f)
+		a += 360.f;
+	if (a > 360.f)
+		a -= 360.f;
 	return (a);
 }
 
@@ -50,7 +56,7 @@ void	s(t_main *main)
 	py = main->plr.p.y;
 	main->plr.p.x -= cosf(deg_to_rad(main->plr.a)) * SPEED;
 	main->plr.p.y -= sinf(deg_to_rad(main->plr.a)) * SPEED;
-	if (main->map.map[(int)round(main->plr.p.y)][(int)round(main->plr.p.x)] == '1')
+	if (get_block(main, main->plr) == '1')
 	{
 		main->plr.p.y = py;
 		main->plr.p.x = px;
@@ -66,25 +72,7 @@ void	w(t_main *main)
 	py = main->plr.p.y;
 	main->plr.p.x += cosf(deg_to_rad(main->plr.a)) * SPEED;
 	main->plr.p.y += sinf(deg_to_rad(main->plr.a)) * SPEED;
-	if (main->map.map[(int)round(main->plr.p.y)][(int)round(main->plr.p.x)] == '1')
-	{
-		main->plr.p.y = py;
-		main->plr.p.x = px;
-	}
-}
-
-void	a(t_main *main)
-{
-	float	a;
-	float	py;
-	float	px;
-
-	px = main->plr.p.x;
-	py = main->plr.p.y;
-	a = fix_ang(main->plr.a + 90.f);
-	main->plr.p.x += cosf(deg_to_rad(a)) * SPEED;
-	main->plr.p.y -= -sinf(deg_to_rad(a)) * SPEED;
-	if (main->map.map[(int)round(main->plr.p.y)][(int)round(main->plr.p.x)] == '1')
+	if (get_block(main, main->plr) == '1')
 	{
 		main->plr.p.y = py;
 		main->plr.p.x = px;
@@ -99,10 +87,28 @@ void	d(t_main *main)
 
 	px = main->plr.p.x;
 	py = main->plr.p.y;
+	a = fix_ang(main->plr.a + 90.f);
+	main->plr.p.x += cosf(deg_to_rad(a)) * SPEED;
+	main->plr.p.y -= -sinf(deg_to_rad(a)) * SPEED;
+	if (get_block(main, main->plr) == '1')
+	{
+		main->plr.p.y = py;
+		main->plr.p.x = px;
+	}
+}
+
+void	a(t_main *main)
+{
+	float	a;
+	float	py;
+	float	px;
+
+	px = main->plr.p.x;
+	py = main->plr.p.y;
 	a = fix_ang(main->plr.a - 90.f);
 	main->plr.p.x += cosf(deg_to_rad(a)) * SPEED;
 	main->plr.p.y -= -sinf(deg_to_rad(a)) * SPEED;
-	if (main->map.map[(int)round(main->plr.p.y)][(int)round(main->plr.p.x)] == '1')
+	if (get_block(main, main->plr) == '1')
 	{
 		main->plr.p.y = py;
 		main->plr.p.x = px;

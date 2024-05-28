@@ -20,8 +20,8 @@ void	init(t_main *main, char **av)
 	main->scr.data = mlx_get_data_addr(main->scr.img, &(main->scr.bpp), &(main->scr.line), &(main->scr.endian));
 	if (build_map(main->mlxptr, &(main->map), av[1]) != OKAY_OKAY)
 		on_destroy(main);
-	main->plr.p.x = main->map.spawn.x;
-	main->plr.p.y = main->map.spawn.y;
+	main->plr.p.x = main->map.spawn.x + .5f;
+	main->plr.p.y = main->map.spawn.y + .5f;
 	main->plr.a = main->map.view;
 }
 

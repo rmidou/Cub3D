@@ -69,13 +69,13 @@ void	get_spawn(t_map *m)
 		y++;
 	}
 	if (m->map[m->spawn.y][m->spawn.x] == 'N')
-		m->view = 0;
-	if (m->map[m->spawn.y][m->spawn.x] == 'S')
-		m->view = 180;
-	if (m->map[m->spawn.y][m->spawn.x] == 'E')
-		m->view = 90;
-	if (m->map[m->spawn.y][m->spawn.x] == 'W')
 		m->view = 270;
+	if (m->map[m->spawn.y][m->spawn.x] == 'S')
+		m->view = 90;
+	if (m->map[m->spawn.y][m->spawn.x] == 'E')
+		m->view = 0;
+	if (m->map[m->spawn.y][m->spawn.x] == 'W')
+		m->view = 180;
 }
 
 void	get_map_specs(t_map *m)

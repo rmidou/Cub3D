@@ -5,6 +5,7 @@
 # include "../libft/libft.h"
 # include "../minilibx/mlx.h"
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <string.h>
 # include <X11/keysym.h>
@@ -17,6 +18,12 @@
 #define WHITE_PIXEL 0xFFFFFF
 #define BLUE_PIXEL	0x77B5FE
 #define PI			3.141592f
+#define	OFFSET		-0.f
+
+#define CEIL	0
+#define FLOOR	1
+#define X_		0
+#define Y_		1
 
 #define MAP_CHARS	" 10NSEW"
 
@@ -44,6 +51,12 @@
 #define SCREEN_W	1920
 #define SCREEN_H	1280
 #define FOV 		90
+#define RENDER_DIST	30.f
+#define SCREEN_DIST	.25f
+#define AR			((float)SCREEN_W / (float)SCREEN_H)
+#define SW			((float)SCREEN_DIST / tanf(deg_to_rad(90.f - (FOV / 2.f))))
+#define SH			(SW / AR)
+#define COL_W		10
 #define	SPEED		0.1f
 #define SCREEN_SIZE	64.f
 
@@ -97,6 +110,7 @@ typedef struct s_map
 
 typedef struct s_ray
 {
+	int		index;
 	float	a;
 	t_vecf	p;
 	t_vecf	d;
@@ -122,8 +136,10 @@ int		on_destroy(t_main *map);
 
 /*		move.c	*/
 float	deg_to_rad(float a);
+float	rad_to_deg(float a);
 int		move(int key, t_main *map);
-int		fix_ang(int a);
+float	fix_ang(float a);
+int	rgb(int t, int r, int g, int b);
 
 /*		map.c	*/
 void	free_main(t_main *main);
@@ -134,6 +150,7 @@ void	free_main(t_main *main);
 void	draw_rays(t_main *map);
 void	draw_line(t_main *main, t_veci start, t_veci end, int color);
 void    draw_view_line(t_main *main);
+char	get_block(t_main *main, t_ray r);
 
 void	set_pixel(int color, t_txr t, int x, int y);
 
@@ -151,7 +168,9 @@ int	throw_error(int err, char *line);
 void	print_map(t_map *map);
 
 /*		ray.c		*/
-void	whey(t_ray *perso);
+void	whey(t_ray *ray);
 float	dist(t_vecf v);
+void	init_dir(t_ray *r);
+void	init_dir2(t_ray *r);
 
 #endif
