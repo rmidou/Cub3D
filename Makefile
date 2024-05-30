@@ -36,6 +36,7 @@ C_FILE		=	main.c					\
 				rendering/draw_rays.c	\
 				rendering/ray.c			\
 				rendering/color.c		\
+				rendering/minimap.c		\
 
 SRC_DIR		=	./src/
 

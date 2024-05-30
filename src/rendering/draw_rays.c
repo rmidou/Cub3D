@@ -77,5 +77,6 @@ void	shoot_rays(t_main *main)
 		if (out_of_bounds(main, r.p))
 			draw_3d(main, col_index * COL_W, r);
 	}
+	mini_map(main);
 	mlx_put_image_to_window(main->mlxptr, main->winptr, main->scr.img, 0, 0);
 }

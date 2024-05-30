@@ -199,4 +199,6 @@ t_vecf	sub(t_vecf u, t_vecf v);
 t_vecf	scale(t_vecf v, float f);
 int		get_line_height(t_main *m, t_ray r);
 
+void	mini_map(t_main *main);
+
 #endif
