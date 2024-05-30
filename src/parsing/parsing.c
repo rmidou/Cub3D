@@ -10,12 +10,12 @@ int	get_line_type(char *line)
 	if (line[i] == '\n' || line[i] == '\0')
 		return (LN_TYPE_EMPTY);
 	if ((line[0] == 'N' && line[1] == 'O')
-	||	(line[0] == 'S' && line[1] == 'O')
-	||	(line[0] == 'E' && line[1] == 'A')
-	||	(line[0] == 'W' && line[1] == 'E'))
+		|| (line[0] == 'S' && line[1] == 'O')
+		|| (line[0] == 'E' && line[1] == 'A')
+		|| (line[0] == 'W' && line[1] == 'E'))
 		return (LN_TYPE_TXR);
 	if (line[0] == 'F'
-	||	line[0] == 'C')
+		|| line[0] == 'C')
 		return (LN_TYPE_CLR);
 	i = 0;
 	while (line[i] && ft_strchr(MAP_CHARS, line[i]) != NULL)

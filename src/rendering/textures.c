@@ -11,7 +11,7 @@ t_txr	get_hit_texture(t_main *m, t_ray r)
 	return (m->map.n);
 }
 
-t_clr	get_pixel_color(t_main *m, int y_pos, float len, t_txr t, t_ray r)
+t_clr	get_pixel_color(t_main *m, float y_pos_len, t_txr t, t_ray r)
 {
 	int		x;
 	int		y;
@@ -27,7 +27,7 @@ t_clr	get_pixel_color(t_main *m, int y_pos, float len, t_txr t, t_ray r)
 		x = (float)t.size.x * (r.p.y - floorf(r.p.y));
 	if (r.hit == HIT_N || r.hit == HIT_E)
 		x = (float)t.size.x - x;
-	y = ((float)y_pos / len) * (float)t.size.y;
+	y = (y_pos_len) * (float)t.size.y;
 	if (r.hit == HIT_E || r.hit == HIT_N)
 		return (scale_clr(get_pixel(t, x - 1, y), l));
 	return (scale_clr(get_pixel(t, x, y), l));
@@ -46,11 +46,12 @@ void	draw_texture(t_main *m, int x_pos, t_ray r)
 	y = 0;
 	while (y < (int)len)
 	{
-		color = get_pixel_color(m, y, len, t, r);
+		color = get_pixel_color(m, ((float)y / len), t, r);
 		x = x_pos;
 		while (x < x_pos + COL_W)
 		{
-			set_pixel(color.color_i, m->scr, x, (SCREEN_H / 2) + (y - (len / 2)));
+			set_pixel(color.color_i, m->scr, x, (SCREEN_H / 2)
+				+ (y - (len / 2)));
 			x++;
 		}
 		y++;

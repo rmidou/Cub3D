@@ -1,4 +1,3 @@
-
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -67,7 +66,6 @@ typedef struct s_veci
 	int	x;
 	int	y;
 }	t_veci;
-
 
 typedef struct s_txr
 {
@@ -179,6 +177,9 @@ float	dist(t_vecf v);
 void	init_dir(t_ray *r);
 void	init_dir2(t_ray *r);
 
+/*		minimap.c	*/
+void	mini_map(t_main *main);
+
 /*		color.c		*/
 t_clr	color(int r, int g, int b);
 t_clr	get_hit_color(t_main *m, t_ray r);
@@ -201,7 +202,5 @@ t_vecf	sub(t_vecf u, t_vecf v);
 /*		vectors2.c	*/
 t_vecf	scale(t_vecf v, float f);
 int		get_line_height(t_main *m, t_ray r);
-
-void	mini_map(t_main *main);
 
 #endif
