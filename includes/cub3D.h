@@ -148,6 +148,8 @@ char	get_block2(t_main *main, t_vecf p);
 /*		img.c	*/
 void	draw_line(t_main *main, t_veci start, t_veci end, int color);
 void	reset_screen(t_main *main);
+t_clr	get_pixel(t_txr t, int x, int y);
+void	set_pixel(int color, t_txr t, int x, int y);
 
 /*		draw_rays.c	*/
 void	draw_rays(t_main *map);
@@ -155,7 +157,8 @@ void	draw_line(t_main *main, t_veci start, t_veci end, int color);
 void	shoot_rays(t_main *main);
 char	get_block(t_main *main, t_ray r);
 
-void	set_pixel(int color, t_txr t, int x, int y);
+/*		textures.c	*/
+void	draw_texture(t_main *m, int x_pos, t_ray r);
 
 /*		parsing.c	*/
 int		build_map(void *mlx_ptr, t_map *m, char *file);

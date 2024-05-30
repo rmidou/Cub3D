@@ -50,9 +50,9 @@ void	get_hit(t_ray *r)
 	else if (r->p.x == floorf(r->p.x))
 		r->hit = HIT_W;
 	else if (r->p.y == floorf(r->p.y) && r->d.y < 0.f)
-		r->hit = HIT_N;
-	else
 		r->hit = HIT_S;
+	else
+		r->hit = HIT_N;
 }
 
 void	shoot_rays(t_main *main)
@@ -75,7 +75,7 @@ void	shoot_rays(t_main *main)
 		}
 		get_hit(&r);
 		if (out_of_bounds(main, r.p))
-			draw_3d(main, col_index * COL_W, r);
+			draw_texture(main, col_index * COL_W, r);
 	}
 	mini_map(main);
 	mlx_put_image_to_window(main->mlxptr, main->winptr, main->scr.img, 0, 0);

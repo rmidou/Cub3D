@@ -14,7 +14,5 @@ int	get_line_height(t_main *m, t_ray r)
 	ray_path = rotate(ray_path, -(m->plr.a));
 	len = abs((int)((tanf(to_rad(90.f - (FOV / 2.f))) * SCREEN_W)
 				/ (2.f * ray_path.x)));
-	if (len > SCREEN_H)
-		len = SCREEN_H;
 	return (len);
 }

@@ -4,6 +4,8 @@ void	set_pixel(int color, t_txr t, int x, int y)
 {
 	int		pixel;
 
+	if (x < 0 || x >= t.size.x || y < 0 || y >= t.size.y)
+		return ;
 	pixel = (y * t.line) + (x * (t.bpp / 8));
 	if (t.endian == 1)
 	{
@@ -19,6 +21,18 @@ void	set_pixel(int color, t_txr t, int x, int y)
 		t.data[pixel + 2] = (color >> 16) & 0xFF;
 		t.data[pixel + 3] = (color >> 24);
 	}
+}
+
+t_clr	get_pixel(t_txr t, int x, int y)
+{
+	int		pixel;
+
+	if (x < 0 || x >= t.size.x || y < 0 || y >= t.size.y)
+		return (color(255, 0, 0));
+	pixel = (y * t.line) + (x * (t.bpp / 8));
+	return (color(t.data[pixel + 2],
+			t.data[pixel + 1],
+			t.data[pixel + 0]));
 }
 
 void	draw_line(t_main *main, t_veci start, t_veci end, int color)

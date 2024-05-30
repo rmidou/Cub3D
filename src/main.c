@@ -18,6 +18,7 @@ void	init(t_main *main, char **av)
 	main->winptr = mlx_new_window(main->mlxptr, SCREEN_W, SCREEN_H, "cub3d");
 	main->scr.img = mlx_new_image(main->mlxptr, SCREEN_W, SCREEN_H);
 	main->scr.data = mlx_get_data_addr(main->scr.img, &(main->scr.bpp), &(main->scr.line), &(main->scr.endian));
+	main->scr.size = (t_veci){SCREEN_W, SCREEN_H};
 	if (build_map(main->mlxptr, &(main->map), av[1]) != OKAY_OKAY)
 		on_destroy(main);
 	main->plr.p.x = main->map.spawn.x + .5f;

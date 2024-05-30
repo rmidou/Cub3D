@@ -17,10 +17,10 @@ void	print_mini_map(t_main *main, char c, int yy, int ii)
 
 	scale = (SCREEN_W / 5) / (main->map.size.x > main->map.size.y ? main->map.size.x : main->map.size.y);
 	x = 1;
-	while (x < scale)
+	while (x <= scale)
 	{
 		y = 1;
-		while (y < scale)
+		while (y <= scale)
 		{
 			if (c == '0' || c == 'N')
 				color = WHITE_PIXEL;
