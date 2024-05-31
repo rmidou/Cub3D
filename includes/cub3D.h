@@ -154,6 +154,7 @@ void	draw_line(t_main *main, t_veci start, t_veci end, int color);
 void	reset_screen(t_main *main);
 t_clr	get_pixel(t_txr t, int x, int y);
 void	set_pixel(int color, t_txr t, int x, int y);
+float	get_shade(int y);
 
 /*		draw_rays.c		*/
 void	draw_rays(t_main *map);

@@ -38,12 +38,7 @@ t_clr	get_pixel_color(t_main *m, float y_pos_len, t_txr t)
 {
 	int		x;
 	int		y;
-	float	l;
 
-	l = dist(vecf(m->plr.p.x - m->ray.p.x, 0));
-	l = 1.f - (1.f / (RENDER_DIST / l));
-	if (l < 0.f)
-		l = 0.f;
 	if (m->ray.hit == HIT_S || m->ray.hit == HIT_N)
 		x = (float)t.size.x * (m->ray.p.x - floorf(m->ray.p.x));
 	else
@@ -52,15 +47,15 @@ t_clr	get_pixel_color(t_main *m, float y_pos_len, t_txr t)
 		x = (float)t.size.x - x;
 	y = (y_pos_len) * (float)t.size.y;
 	if (m->ray.hit == HIT_E || m->ray.hit == HIT_N)
-		return (scale_clr(get_pixel(t, x - 1, y), l));
-	return (scale_clr(get_pixel(t, x, y), l));
+		return (get_pixel(t, x - 1, y));
+	return (get_pixel(t, x, y));
 }
 
 float	get_lighting(t_main *m)
 {
 	float	l;
 
-	l = dist(vecf(m->plr.p.x - m->ray.p.x, 0));
+	l = dist(sub(m->plr.p, m->ray.p));
 	l = 1.f - (1.f / (RENDER_DIST / l));
 	if (l < 0.f)
 		l = 0.f;
@@ -73,7 +68,7 @@ void	draw_row(t_main *m, t_veci p, t_txr t, float len)
 	float	l;
 	int		x;
 
-	l = get_lighting(m);
+	l = get_shade((SCREEN_H / 2) + (len / 2)) + .25f;
 	color = get_pixel_color(m, ((float)p.y / len), t);
 	x = p.x;
 	while (x < p.x + COL_W)

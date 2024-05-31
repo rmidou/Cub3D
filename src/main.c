@@ -30,8 +30,6 @@ void	init(t_main *main, char **av)
 
 int	loop(t_main *m)
 {
-	if (m->update == 0)
-		return (0);
 	reset_screen(m);
 	shoot_rays(m);
 	m->update = 0;

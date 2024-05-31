@@ -73,29 +73,30 @@ float	get_shade(int y)
 		return (0.f);
 	x = (tanf(to_rad(90.f - (FOV / 2.f))) * SCREEN_W) / (2.f * len);
 	shade = 1.f - (1.f / (RENDER_DIST / x));
-	if (shade < 0.f)
-		shade = 0.f;
+	if (shade < -.25f)
+		shade = -.25f;
 	return (shade);
 }
 
 void	reset_screen(t_main *main)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	float	l;
 
 	y = 0;
 	x = 0;
-	//ft_bzero(main->scr.data, SCREEN_W * SCREEN_H * (main->scr.bpp / 8));
 	while (y < SCREEN_H)
 	{
+		l = get_shade(y) + .25f;
 		x = 0;
 		while (x < SCREEN_W)
 		{
 			if (y >= (SCREEN_H / 2))
-				set_pixel(scale_clr(main->map.floor, get_shade(y)).color_i,
+				set_pixel(scale_clr(main->map.floor, add_dithering(l, x, y)).color_i,
 					main->scr, x, y);
 			if (y < (SCREEN_H / 2))
-				set_pixel(scale_clr(main->map.ceiling, get_shade(y)).color_i,
+				set_pixel(scale_clr(main->map.ceiling, add_dithering(l, x, y)).color_i,
 					main->scr, x, y);
 			x++;
 		}
