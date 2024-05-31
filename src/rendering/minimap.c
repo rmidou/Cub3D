@@ -34,14 +34,14 @@ void	print_mini_map(t_main *main, char c, int yy, int ii)
 	int	y;
 	int	color;
 
-	scale = ft_scale (main);
+	scale = ft_scale(main);
 	x = 1;
 	while (x <= scale)
 	{
 		y = 1;
 		while (y <= scale)
 		{
-			if (c == '0' || c == 'N')
+			if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
 				color = WHITE_PIXEL;
 			else
 				color = BLACK_PIXEL;

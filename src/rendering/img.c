@@ -85,7 +85,7 @@ void	reset_screen(t_main *main)
 
 	y = 0;
 	i = 0;
-	ft_bzero(main->scr.data, SCREEN_W * SCREEN_H * (main->scr.bpp / 8));
+	//ft_bzero(main->scr.data, SCREEN_W * SCREEN_H * (main->scr.bpp / 8));
 	while (y < SCREEN_H)
 	{
 		i = 0;
