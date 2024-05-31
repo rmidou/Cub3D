@@ -163,6 +163,7 @@ char	get_block(t_main *main);
 
 /*		textures.c		*/
 void	draw_texture(t_main *m, int x_pos);
+float	add_dithering(float l, int x, int y);
 
 /*		parsing.c		*/
 int		build_map(void *mlx_ptr, t_map *m, char *file);

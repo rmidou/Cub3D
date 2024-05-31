@@ -81,23 +81,23 @@ float	get_shade(int y)
 void	reset_screen(t_main *main)
 {
 	int	y;
-	int	i;
+	int	x;
 
 	y = 0;
-	i = 0;
+	x = 0;
 	//ft_bzero(main->scr.data, SCREEN_W * SCREEN_H * (main->scr.bpp / 8));
 	while (y < SCREEN_H)
 	{
-		i = 0;
-		while (i < SCREEN_W)
+		x = 0;
+		while (x < SCREEN_W)
 		{
 			if (y >= (SCREEN_H / 2))
 				set_pixel(scale_clr(main->map.floor, get_shade(y)).color_i,
-					main->scr, i, y);
+					main->scr, x, y);
 			if (y < (SCREEN_H / 2))
 				set_pixel(scale_clr(main->map.ceiling, get_shade(y)).color_i,
-					main->scr, i, y);
-			i++;
+					main->scr, x, y);
+			x++;
 		}
 		y++;
 	}
