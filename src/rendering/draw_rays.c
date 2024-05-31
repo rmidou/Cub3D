@@ -7,7 +7,7 @@ void	draw_3d(t_main *main, int x, t_ray r)
 	float	len;
 
 	i = x;
-	len = get_line_height(main, r);
+	len = get_line_height(main);
 	c = get_hit_color(main, r);
 	while (i < x + COL_W)
 	{
@@ -19,15 +19,15 @@ void	draw_3d(t_main *main, int x, t_ray r)
 	}
 }
 
-char	get_block(t_main *main, t_ray r)
+char	get_block(t_main *main)
 {
 	t_veci	i;
 
-	i.x = (int)floorf(r.p.x);
-	i.y = (int)floorf(r.p.y);
-	if (r.p.x == floorf(r.p.x) && r.d.x < .0f)
+	i.x = (int)floorf(main->ray.p.x);
+	i.y = (int)floorf(main->ray.p.y);
+	if (main->ray.p.x == floorf(main->ray.p.x) && main->ray.d.x < .0f)
 		i.x--;
-	if (r.p.y == floorf(r.p.y) && r.d.y < .0f)
+	if (main->ray.p.y == floorf(main->ray.p.y) && main->ray.d.y < .0f)
 		i.y--;
 	if (i.y < 0.f || i.y >= main->map.size.y
 		|| i.x < 0.f || i.x >= main->map.size.x)
@@ -58,24 +58,23 @@ void	get_hit(t_ray *r)
 void	shoot_rays(t_main *main)
 {
 	int		col_index;
-	t_ray	r;
 
 	col_index = -1;
 	while (++col_index < (SCREEN_W / COL_W))
 	{
-		r.a = fix_ang(main->plr.a);
-		r.index = col_index;
-		init_dir2(&r);
-		r.p.x = main->plr.p.x;
-		r.p.y = main->plr.p.y;
-		while (out_of_bounds(main, r.p) && get_block(main, r) != '1')
+		main->ray.a = fix_ang(main->plr.a);
+		main->ray.index = col_index;
+		init_dir2(&main->ray);
+		main->ray.p.x = main->plr.p.x;
+		main->ray.p.y = main->plr.p.y;
+		while (out_of_bounds(main, main->ray.p) && get_block(main) != '1')
 		{
-			whey(&r);
-			r.p = r.n;
+			whey(&main->ray);
+			main->ray.p = main->ray.n;
 		}
-		get_hit(&r);
-		if (out_of_bounds(main, r.p))
-			draw_texture(main, col_index * COL_W, r);
+		get_hit(&main->ray);
+		if (out_of_bounds(main, main->ray.p))
+			draw_texture(main, col_index * COL_W);
 	}
 	mini_map(main);
 	mlx_put_image_to_window(main->mlxptr, main->winptr, main->scr.img, 0, 0);

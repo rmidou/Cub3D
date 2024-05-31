@@ -2,14 +2,29 @@
 
 void	print_player(t_main *main, int scale)
 {
-	set_pixel(RED_PIXEL, main->scr, main->plr.p.x * scale,
-		main->plr.p.y * scale);
-	set_pixel(RED_PIXEL, main->scr, (main->plr.p.x * scale) + 1,
-		(main->plr.p.y * scale) + 1);
-	set_pixel(RED_PIXEL, main->scr, (main->plr.p.x * scale) + 1,
-		main->plr.p.y * scale);
-	set_pixel(RED_PIXEL, main->scr, main->plr.p.x * scale,
-		(main->plr.p.y * scale) + 1);
+	int	x;
+	int	y;
+
+	x = 0;
+	while (x < 4)
+	{
+		y = 0;
+		while (y < 4)
+		{
+			set_pixel(RED_PIXEL, main->scr, main->plr.p.x * scale + x,
+				main->plr.p.y * scale + y);
+			y++;
+		}
+		x++;
+	}
+	// set_pixel(RED_PIXEL, main->scr, main->plr.p.x * scale,
+	// 	main->plr.p.y * scale);
+	// set_pixel(RED_PIXEL, main->scr, (main->plr.p.x * scale) + 1,
+	// 	(main->plr.p.y * scale) + 1);
+	// set_pixel(RED_PIXEL, main->scr, (main->plr.p.x * scale) + 1,
+	// 	main->plr.p.y * scale);
+	// set_pixel(RED_PIXEL, main->scr, main->plr.p.x * scale,
+	// 	(main->plr.p.y * scale) + 1);
 }
 
 int	ft_scale(t_main *main)
@@ -55,17 +70,17 @@ void	print_mini_map(t_main *main, char c, int yy, int ii)
 
 void	mini_map(t_main *main)
 {
-	int	i;
+	int	x;
 	int	y;
 
 	y = 0;
-	while (main->map.map[y])
+	while (y < main->map.size.y)
 	{
-		i = 0;
-		while (main->map.map[y][i])
+		x = 0;
+		while (x < main->map.size.x)
 		{
-			print_mini_map(main, main->map.map[y][i], y, i);
-			i++;
+			print_mini_map(main, get_block2(main, vecf(x, y)), y, x);
+			x++;
 		}
 		y++;
 	}

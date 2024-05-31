@@ -28,6 +28,7 @@ C_FILE		=	main.c					\
 				parsing/error.c			\
 										\
 				physics/movement.c		\
+				physics/collisions.c	\
 				physics/angles.c		\
 				physics/vectors.c		\
 				physics/vectors2.c		\

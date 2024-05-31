@@ -8,10 +8,11 @@ void	move_ang(t_main *main, float a)
 	mv = scale(mv, SPEED);
 	if (get_block2(main, add(main->plr.p, mv)) != '1')
 		main->plr.p = add(main->plr.p, mv);
-	//else if (get_block2(main, add(main->plr.p, vecf(mv.x, 0.f))) != '1')
-	//	main->plr.p = add(main->plr.p, vecf(mv.x, 0.f));
-	//else if (get_block2(main, add(main->plr.p, vecf(0.f, mv.y))) != '1')
-	//	main->plr.p = add(main->plr.p, vecf(0.f, mv.y));
+	else if (get_block2(main, add(main->plr.p, vecf(mv.x, 0.f))) != '1')
+		main->plr.p = add(main->plr.p, vecf(mv.x, 0.f));
+	else if (get_block2(main, add(main->plr.p, vecf(0.f, mv.y))) != '1')
+		main->plr.p = add(main->plr.p, vecf(0.f, mv.y));
+	check_collision(main);
 }
 
 void	arrows1(t_main *main)
@@ -42,7 +43,6 @@ int	move(int key, t_main *main)
 		arrows2(main);
 	if (key == 65307)
 		on_destroy(main);
-	reset_screen(main);
-	shoot_rays(main);
+	main->update = 1;
 	return (1);
 }

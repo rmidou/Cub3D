@@ -61,6 +61,8 @@
 # define SPEED			0.25f
 # define SCREEN_SIZE	64.f
 
+# define COLLISION_DIST	0.6f
+
 typedef struct s_veci
 {
 	int	x;
@@ -124,83 +126,93 @@ typedef struct s_main
 {
 	t_ray	plr;
 
+	t_ray	ray;
+
 	t_map	map;
 
 	t_txr	scr;
+
+	int		update;
 
 	void	*mlxptr;
 	void	*winptr;
 }	t_main;
 
-/*		main.c	*/
+/*		main.c			*/
 int		on_destroy(t_main *map);
 
-/*		move.c	*/
+/*		move.c			*/
 int		move(int key, t_main *map);
 int		rgb(int t, int r, int g, int b);
 
-/*		map.c	*/
+/*		map.c			*/
 void	free_main(t_main *main);
 char	get_block2(t_main *main, t_vecf p);
 
-/*		img.c	*/
+/*		img.c			*/
 void	draw_line(t_main *main, t_veci start, t_veci end, int color);
 void	reset_screen(t_main *main);
 t_clr	get_pixel(t_txr t, int x, int y);
 void	set_pixel(int color, t_txr t, int x, int y);
 
-/*		draw_rays.c	*/
+/*		draw_rays.c		*/
 void	draw_rays(t_main *map);
 void	draw_line(t_main *main, t_veci start, t_veci end, int color);
 void	shoot_rays(t_main *main);
-char	get_block(t_main *main, t_ray r);
+char	get_block(t_main *main);
 
-/*		textures.c	*/
-void	draw_texture(t_main *m, int x_pos, t_ray r);
+/*		textures.c		*/
+void	draw_texture(t_main *m, int x_pos);
 
-/*		parsing.c	*/
+/*		parsing.c		*/
 int		build_map(void *mlx_ptr, t_map *m, char *file);
 
-/*		parsing2.c	*/
+/*		parsing2.c		*/
 int		read_mapline(t_map *m, char *line);
 int		read_color(t_map *m, char *line);
 int		read_texture(void *mlx_ptr, t_map *m, char *line);
 
-/*		error.c		*/
+/*		error.c			*/
 int		max(int i1, int i2);
 int		throw_error(int err, char *line);
 void	print_map(t_map *map);
 
-/*		ray.c		*/
+/*		ray.c			*/
 void	whey(t_ray *ray);
 float	dist(t_vecf v);
 void	init_dir(t_ray *r);
 void	init_dir2(t_ray *r);
 
-/*		minimap.c	*/
+/*		minimap.c		*/
 void	mini_map(t_main *main);
 
-/*		color.c		*/
+/*		color.c			*/
 t_clr	color(int r, int g, int b);
 t_clr	get_hit_color(t_main *m, t_ray r);
 t_clr	scale_clr(t_clr c, float f);
 
-/*		angles.c	*/
+/*		angles.c		*/
 t_vecf	ang_to_vecf(float a);
 float	fix_ang(float a);
 float	to_rad(float a);
 float	to_deg(float a);
 t_vecf	rotate(t_vecf v, float a);
 
-/*		vectors.c	*/
+/*		vectors.c		*/
 t_vecf	vecf(float x, float y);
 float	dist(t_vecf v);
 t_vecf	norm(t_vecf v);
 t_vecf	add(t_vecf u, t_vecf v);
 t_vecf	sub(t_vecf u, t_vecf v);
 
-/*		vectors2.c	*/
+/*		vectors2.c		*/
 t_vecf	scale(t_vecf v, float f);
-int		get_line_height(t_main *m, t_ray r);
+int		get_line_height(t_main *m);
+float	absf(float f);
+
+/*		collisions.c	*/
+void	clip_x(t_main *m, t_vecf block);
+void	clip_y(t_main *m, t_vecf block);
+void	check_collision(t_main *m);
 
 #endif
