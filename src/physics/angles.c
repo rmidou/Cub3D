@@ -20,11 +20,16 @@ float	to_rad(float a)
 
 float	fix_ang(float a)
 {
-	if (a < 0.f)
-		a += 360.f;
-	if (a > 360.f)
-		a -= 360.f;
-	return (a);
+	float	ang;
+
+	ang = a;
+	if (ang > 360.f)
+		ang -= 360.f;
+	if (ang < 0.f)
+		ang += 360.f;
+	if (ang > 360.f || ang < 0.f)
+		return (fix_ang(ang));
+	return (ang);
 }
 
 t_vecf	rotate(t_vecf v, float a)

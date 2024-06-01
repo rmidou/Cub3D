@@ -17,14 +17,6 @@ void	print_player(t_main *main, int scale)
 		}
 		x++;
 	}
-	// set_pixel(RED_PIXEL, main->scr, main->plr.p.x * scale,
-	// 	main->plr.p.y * scale);
-	// set_pixel(RED_PIXEL, main->scr, (main->plr.p.x * scale) + 1,
-	// 	(main->plr.p.y * scale) + 1);
-	// set_pixel(RED_PIXEL, main->scr, (main->plr.p.x * scale) + 1,
-	// 	main->plr.p.y * scale);
-	// set_pixel(RED_PIXEL, main->scr, main->plr.p.x * scale,
-	// 	(main->plr.p.y * scale) + 1);
 }
 
 int	ft_scale(t_main *main)
@@ -37,7 +29,7 @@ int	ft_scale(t_main *main)
 		max_map_dimension = main->map.size.x;
 	else
 		max_map_dimension = main->map.size.y;
-	minimap_size = SCREEN_W / 5;
+	minimap_size = SCREEN_W / 3;
 	scale = minimap_size / max_map_dimension;
 	return (scale);
 }
@@ -67,6 +59,8 @@ void	print_mini_map(t_main *main, char c, int yy, int ii)
 	}
 	print_player(main, scale);
 }
+
+// FAIRE UN CURSEUR
 
 void	mini_map(t_main *main)
 {

@@ -28,10 +28,10 @@ void	free_txr(void *mlxptr, t_txr *t)
 
 void	free_map(void *mlxptr, t_map *m)
 {
-	free_txr(mlxptr, &(m->n));
-	free_txr(mlxptr, &(m->s));
-	free_txr(mlxptr, &(m->e));
-	free_txr(mlxptr, &(m->w));
+	free_txr(mlxptr, (m->n.txrs));
+	free_txr(mlxptr, (m->s.txrs));
+	free_txr(mlxptr, (m->e.txrs));
+	free_txr(mlxptr, (m->w.txrs));
 }
 
 void	free_main(t_main *main)

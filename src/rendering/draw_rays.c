@@ -67,12 +67,16 @@ void	shoot_rays(t_main *main)
 		init_dir2(&main->ray);
 		main->ray.p.x = main->plr.p.x;
 		main->ray.p.y = main->plr.p.y;
-		while (out_of_bounds(main, main->ray.p) && get_block(main) != '1')
+		while (out_of_bounds(main, main->ray.p) && (get_block(main) != '1'
+			&& get_block(main) != 'D'))
 		{
 			whey(&main->ray);
 			main->ray.p = main->ray.n;
 		}
-		get_hit(&main->ray);
+		if (get_block(main) != 'D')
+			get_hit(&main->ray);
+		else
+			main->ray.hit = HIT_D;
 		if (out_of_bounds(main, main->ray.p))
 			draw_texture(main, col_index * COL_W);
 	}

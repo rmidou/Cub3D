@@ -32,6 +32,7 @@ C_FILE		=	main.c					\
 				physics/angles.c		\
 				physics/vectors.c		\
 				physics/vectors2.c		\
+				physics/mouse.c			\
 										\
 				rendering/img.c			\
 				rendering/draw_rays.c	\
@@ -39,6 +40,7 @@ C_FILE		=	main.c					\
 				rendering/color.c		\
 				rendering/minimap.c		\
 				rendering/textures.c	\
+				rendering/animations.c	\
 
 SRC_DIR		=	./src/
 

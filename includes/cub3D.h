@@ -28,8 +28,9 @@
 # define HIT_S	1
 # define HIT_E	2
 # define HIT_W	3
+# define HIT_D	4
 
-# define MAP_CHARS	" 10NSEW"
+# define MAP_CHARS	" 10NSEWD"
 
 # define LN_TYPE_EMPTY		0
 # define LN_TYPE_TXR		1
@@ -63,6 +64,10 @@
 
 # define COLLISION_DIST	0.6f
 
+# define MOUSE			1
+# define MOUSE_SPEED	2.5f
+# define NB_FRAME		10
+
 typedef struct s_veci
 {
 	int	x;
@@ -79,6 +84,22 @@ typedef struct s_txr
 	int				endian;
 	t_veci			size;
 }	t_txr;
+
+
+/*
+
+size = 4
+[ t1 , t2 , t3 , t4 ]
+  ^
+frame
+
+*/
+typedef struct s_anim
+{
+	t_txr	*txrs;
+	int		size;
+	int		frame;
+}	t_anim;
 
 typedef struct s_vecf
 {
@@ -102,10 +123,11 @@ typedef struct s_map
 	t_veci	size;
 	t_veci	spawn;
 	float	view;
-	t_txr	n;
-	t_txr	s;
-	t_txr	e;
-	t_txr	w;
+	t_anim	n;
+	t_anim	s;
+	t_anim	e;
+	t_anim	w;
+	t_anim	d;
 	t_clr	floor;
 	t_clr	ceiling;
 }	t_map;
@@ -127,6 +149,8 @@ typedef struct s_main
 	t_ray	plr;
 
 	t_ray	ray;
+
+	t_veci	mouse;
 
 	t_map	map;
 
@@ -173,6 +197,7 @@ int		build_map(void *mlx_ptr, t_map *m, char *file);
 int		read_mapline(t_map *m, char *line);
 int		read_color(t_map *m, char *line);
 int		read_texture(void *mlx_ptr, t_map *m, char *line);
+int		load_tex(void *mlx_ptr, t_txr *t);
 
 /*		error.c			*/
 int		max(int i1, int i2);
@@ -216,5 +241,14 @@ float	absf(float f);
 void	clip_x(t_main *m, t_vecf block);
 void	clip_y(t_main *m, t_vecf block);
 void	check_collision(t_main *m);
+
+/*		mouse.c			*/
+void	update_mouse(t_main *main);
+int		mouse(int x, int y, t_main *main);
+
+/*		animation.c		*/
+int		init_animation(t_anim *t, int frames);
+void	init_texture(t_main *m);
+void	update_textures(t_anim *t);
 
 #endif

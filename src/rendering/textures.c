@@ -3,12 +3,14 @@
 t_txr	get_hit_texture(t_main *m, t_ray r)
 {
 	if (r.hit == HIT_S)
-		return (m->map.s);
+		return (m->map.s.txrs[m->map.s.frame]);
 	if (r.hit == HIT_E)
-		return (m->map.e);
+		return (m->map.e.txrs[m->map.e.frame]);
 	if (r.hit == HIT_W)
-		return (m->map.w);
-	return (m->map.n);
+		return (m->map.w.txrs[m->map.w.frame]);
+	if (r.hit == HIT_D)
+		return (m->map.d.txrs[m->map.d.frame]);
+	return (m->map.n.txrs[m->map.n.frame]);
 }
 
 float	add_dithering(float l, int x, int y)
