@@ -22,7 +22,7 @@ void	fill_block_pos(t_main *m, t_vecf blocks[9])
 		.y = floorf(m->plr.p.y + 1.f) + .5f};
 }
 
-void	clip_x(t_main *m, t_vecf block, char c)
+void	clip_x(t_main *m, t_vecf block, char c, int stop)
 {
 	t_vecf	mv;
 
@@ -31,13 +31,14 @@ void	clip_x(t_main *m, t_vecf block, char c)
 		mv.x = COLLISION_DIST - absf(sub(block, m->plr.p).x);
 	else
 		mv.x = -(COLLISION_DIST - absf(sub(block, m->plr.p).x));
-	if (get_block2(m, add(m->plr.p, mv)) == c)
-		clip_y(m, block, c);
+	printf("clip x %f - %f %f\n", dist(mv), mv.x, mv.y);
+	if (get_block2(m, add(m->plr.p, scale(mv, 2.f))) == c && !stop)
+		clip_y(m, block, c, 1);
 	else
-		m->plr.p = add(m->plr.p, mv);
+		m->plr.p = add(m->plr.p, scale(mv, 2.f));
 }
 
-void	clip_y(t_main *m, t_vecf block, char c)
+void	clip_y(t_main *m, t_vecf block, char c, int stop)
 {
 	t_vecf	mv;
 
@@ -46,10 +47,10 @@ void	clip_y(t_main *m, t_vecf block, char c)
 		mv.y = COLLISION_DIST - absf(sub(block, m->plr.p).y);
 	else
 		mv.y = -(COLLISION_DIST - absf(sub(block, m->plr.p).y));
-	if (get_block2(m, add(m->plr.p, mv)) == c)
-		clip_x(m, block, c);
+	if (get_block2(m, add(m->plr.p, scale(mv, 2.f))) == c && !stop)
+		clip_x(m, block, c, 1);
 	else
-		m->plr.p = add(m->plr.p, mv);
+		m->plr.p = add(m->plr.p, scale(mv, 2.f));
 }
 
 int	check_collision2(t_main *m, char c, t_vecf blocks[9], int i)
@@ -70,19 +71,19 @@ void	check_collision(t_main *m)
 	while (i < 9)
 	{
 		if (check_collision2(m, '1', blocks, i))
-			clip_x(m, blocks[i], '1');
+			clip_x(m, blocks[i], '1', 0);
 		if (check_collision2(m, 'D', blocks, i))
-			clip_x(m, blocks[i], 'D');
+			clip_x(m, blocks[i], 'D', 0);
 		if (get_block2(m, blocks[i]) == '1'
 			&& absf(sub(blocks[i], m->plr.p).y) < COLLISION_DIST
 			&& absf(sub(blocks[i], m->plr.p).y)
 			>= absf(sub(blocks[i], m->plr.p).x))
-			clip_y(m, blocks[i], '1');
+			clip_y(m, blocks[i], '1', 0);
 		if (get_block2(m, blocks[i]) == 'D'
 			&& absf(sub(blocks[i], m->plr.p).y) < COLLISION_DIST
 			&& absf(sub(blocks[i], m->plr.p).y)
 			>= absf(sub(blocks[i], m->plr.p).x))
-			clip_y(m, blocks[i], 'D');
+			clip_y(m, blocks[i], 'D', 0);
 		i++;
 	}
 }

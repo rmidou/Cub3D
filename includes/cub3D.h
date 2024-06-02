@@ -67,7 +67,7 @@
 
 # define MOUSE			1
 # define MOUSE_SPEED	2.5f
-# define NB_FRAME		10
+# define NB_FRAME		5
 
 typedef struct s_veci
 {
@@ -234,8 +234,8 @@ int		get_line_height(t_main *m);
 float	absf(float f);
 
 /*		collisions.c	*/
-void	clip_x(t_main *m, t_vecf block, char c);
-void	clip_y(t_main *m, t_vecf block, char c);
+void	clip_x(t_main *m, t_vecf block, char c, int stop);
+void	clip_y(t_main *m, t_vecf block, char c, int stop);
 void	check_collision(t_main *m);
 
 /*		mouse.c			*/

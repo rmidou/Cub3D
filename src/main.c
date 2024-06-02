@@ -67,7 +67,7 @@ int	main(int ac, char **av)
 	}
 	close(fd);
 	init(&main, av);
-	//mlx_mouse_hide(main.mlxptr, main.winptr);
+	mlx_mouse_hide(main.mlxptr, main.winptr);
 	mlx_hook(main.winptr, KeyRelease, KeyReleaseMask, &move, &main);
 	mlx_hook(main.winptr, 6, 64, &mouse, &main);
 	mlx_hook(main.winptr, DestroyNotify, StructureNotifyMask,

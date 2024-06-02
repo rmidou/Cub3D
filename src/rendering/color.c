@@ -12,7 +12,17 @@ t_clr	color(int r, int g, int b)
 
 t_clr	scale_clr(t_clr c, float f)
 {
-	return (color((float)c.r * f, (float)c.g * f, (float)c.b * f));
+	float	r;
+	float	g;
+	float	b;
+
+	r = c.r;
+	r *= f;
+	g = c.g;
+	g *= f;
+	b = c.b;
+	b *= f;
+	return (color(floorf(r), floorf(g), floorf(b)));
 }
 
 t_clr	get_hit_color(t_main *m, t_ray r)

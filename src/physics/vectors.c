@@ -2,7 +2,7 @@
 
 t_vecf	vecf(float x, float y)
 {
-	return ((t_vecf){.x = x, .y = y});
+	return ((t_vecf){x, y});
 }
 
 float	dist(t_vecf v)

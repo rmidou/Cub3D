@@ -15,6 +15,11 @@ t_txr	get_hit_texture(t_main *m, t_ray r)
 
 float	add_dithering(float l, int x, int y)
 {
+	if (l < 0.f)
+		return (0.f);
+	if (l > 1.f)
+		return (1.f);
+	return (l);
 	if (l < .15f)
 		return (0.f);
 	if (l < 0.25f && (x % 4 != 0 || y % 4 != 0))
