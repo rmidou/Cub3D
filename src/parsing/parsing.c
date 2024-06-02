@@ -111,8 +111,6 @@ int	build_map(void *mlx_ptr, t_map *m, char *file)
 	err = 0;
 	stage = STAGE_DATA;
 	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (ERR_OPEN);
 	while (!err)
 	{
 		line = get_next_line(fd);

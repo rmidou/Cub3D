@@ -52,6 +52,19 @@ int	loop(t_main *m)
 	return (0);
 }
 
+int	verif_cub(char *av)
+{
+	int	i;
+
+	i = 0;
+	while (av[i])
+		i++;
+	if (i > 3 && av[i - 1] == 'b' && av[i - 2] == 'u'
+		&& av[i - 3] == 'c' && av[i - 4] == '.')
+		return (1);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_main	main;
@@ -60,7 +73,7 @@ int	main(int ac, char **av)
 	fd = -1;
 	if (ac > 1)
 		fd = open(av[1], O_RDONLY) < 0;
-	if (ac != 2 || fd < 0)
+	if (ac != 2 || fd < 0 || verif_cub(av[1]) == 0)
 	{
 		throw_error(ERR_ARG, "");
 		return (0);
