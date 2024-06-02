@@ -2,7 +2,8 @@
 
 int	on_destroy(t_main *main)
 {
-	free_main(main);
+	free_map(main->mlxptr, &(main->map));
+	mlx_destroy_image(main->mlxptr, main->scr.img);
 	mlx_destroy_window(main->mlxptr, main->winptr);
 	mlx_destroy_display(main->mlxptr);
 	free(main->mlxptr);
@@ -54,15 +55,23 @@ int	loop(t_main *m)
 int	main(int ac, char **av)
 {
 	t_main	main;
+	int		fd;
 
-	if (ac < 2)
+	fd = -1;
+	if (ac > 1)
+		fd = open(av[1], O_RDONLY) < 0;
+	if (ac != 2 || fd < 0)
+	{
+		throw_error(ERR_ARG, "");
 		return (0);
+	}
+	close(fd);
 	init(&main, av);
+	//mlx_mouse_hide(main.mlxptr, main.winptr);
 	mlx_hook(main.winptr, KeyRelease, KeyReleaseMask, &move, &main);
 	mlx_hook(main.winptr, 6, 64, &mouse, &main);
 	mlx_hook(main.winptr, DestroyNotify, StructureNotifyMask,
 		&on_destroy, &main);
-	mlx_mouse_hide(main.mlxptr, main.winptr);
 	mlx_loop_hook(main.mlxptr, &loop, &main);
 	mlx_loop(main.mlxptr);
 	return (0);

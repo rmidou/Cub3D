@@ -49,13 +49,12 @@ void	free_map(void *mlxptr, t_map *m)
 	free2(m->e.txrs);
 	free_txr(mlxptr, &(m->w.txrs[0]));
 	free2(m->w.txrs);
+	mlx_destroy_image(mlxptr, m->d.txrs[0].img);
+	mlx_destroy_image(mlxptr, m->d.txrs[1].img);
+	mlx_destroy_image(mlxptr, m->d.txrs[2].img);
+	mlx_destroy_image(mlxptr, m->d.txrs[3].img);
 	free2(m->d.txrs);
 	free_map2(m);
 	free2(m->data);
 	free2(m->file);
-}
-
-void	free_main(t_main *main)
-{
-	free_map(main->mlxptr, &(main->map));
 }

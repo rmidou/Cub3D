@@ -48,6 +48,7 @@
 # define ERR_UNKNOWN			7
 # define ERR_OUT_OF_BOUNDS		8
 # define ERR_PARSING			9
+# define ERR_ARG				10
 
 # define STAGE_DATA	0
 # define STAGE_MAP	1
@@ -85,15 +86,6 @@ typedef struct s_txr
 	t_veci			size;
 }	t_txr;
 
-
-/*
-
-size = 4
-[ t1 , t2 , t3 , t4 ]
-  ^
-frame
-
-*/
 typedef struct s_anim
 {
 	t_txr	*txrs;
@@ -173,6 +165,7 @@ int		rgb(int t, int r, int g, int b);
 /*		map.c			*/
 void	free_main(t_main *main);
 char	get_block2(t_main *main, t_vecf p);
+void	free_map(void *mlxptr, t_map *m);
 
 /*		img.c			*/
 void	draw_line(t_main *main, t_veci start, t_veci end, int color);
