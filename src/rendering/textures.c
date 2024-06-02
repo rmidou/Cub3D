@@ -41,7 +41,7 @@ t_clr	get_pixel_color(t_main *m, float y_pos_len, t_txr t)
 	int		x;
 	int		y;
 
-	if (m->ray.hit == HIT_S || m->ray.hit == HIT_N)
+	if (m->ray.hit == HIT_S || m->ray.hit == HIT_N || m->ray.hit == HIT_D)
 		x = (float)t.size.x * (m->ray.p.x - floorf(m->ray.p.x));
 	else
 		x = (float)t.size.x * (m->ray.p.y - floorf(m->ray.p.y));
@@ -76,27 +76,9 @@ void	draw_row(t_main *m, t_veci p, t_txr t, float len)
 	while (x < p.x + COL_W)
 	{
 		color = scale_clr(color, add_dithering(l, x, (SCREEN_H / 2)
-			+ (p.y - (len / 2))));
+					+ (p.y - (len / 2))));
 		set_pixel(color.color_i, m->scr, x, (SCREEN_H / 2)
 			+ (p.y - (len / 2)));
 		x++;
-	}
-}
-
-void	draw_texture(t_main *m, int x_pos)
-{
-	int		y;
-	float	len;
-	t_txr	t;
-
-	len = get_line_height(m);
-	t = get_hit_texture(m, m->ray);
-	y = -1;
-	while (++y < (int)len)
-	{
-		if ((SCREEN_H / 2) + (y - (len / 2)) < 0
-			|| (SCREEN_H / 2) + (y - (len / 2)) > SCREEN_H)
-			continue ;
-		draw_row(m, (t_veci){x_pos, y}, t, len);
 	}
 }

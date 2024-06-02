@@ -93,11 +93,11 @@ void	reset_screen(t_main *main)
 		while (x < SCREEN_W)
 		{
 			if (y >= (SCREEN_H / 2))
-				set_pixel(scale_clr(main->map.floor, add_dithering(l, x, y)).color_i,
-					main->scr, x, y);
+				set_pixel(scale_clr(main->map.floor,
+						add_dithering(l, x, y)).color_i, main->scr, x, y);
 			if (y < (SCREEN_H / 2))
-				set_pixel(scale_clr(main->map.ceiling, add_dithering(l, x, y)).color_i,
-					main->scr, x, y);
+				set_pixel(scale_clr(main->map.ceiling,
+						add_dithering(l, x, y)).color_i, main->scr, x, y);
 			x++;
 		}
 		y++;

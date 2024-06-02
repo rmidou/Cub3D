@@ -26,12 +26,33 @@ void	free_txr(void *mlxptr, t_txr *t)
 	ft_bzero(t, sizeof(t));
 }
 
+void	free_map2(t_map *m)
+{
+	int	i;
+
+	i = 0;
+	while (m->map[i])
+	{
+		free(m->map[i]);
+		i++;
+	}
+	free(m->map);
+}
+
 void	free_map(void *mlxptr, t_map *m)
 {
-	free_txr(mlxptr, (m->n.txrs));
-	free_txr(mlxptr, (m->s.txrs));
-	free_txr(mlxptr, (m->e.txrs));
-	free_txr(mlxptr, (m->w.txrs));
+	free_txr(mlxptr, &(m->n.txrs[0]));
+	free2(m->n.txrs);
+	free_txr(mlxptr, &(m->s.txrs[0]));
+	free2(m->s.txrs);
+	free_txr(mlxptr, &(m->e.txrs[0]));
+	free2(m->e.txrs);
+	free_txr(mlxptr, &(m->w.txrs[0]));
+	free2(m->w.txrs);
+	free2(m->d.txrs);
+	free_map2(m);
+	free2(m->data);
+	free2(m->file);
 }
 
 void	free_main(t_main *main)

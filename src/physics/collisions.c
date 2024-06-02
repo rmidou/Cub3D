@@ -2,18 +2,27 @@
 
 void	fill_block_pos(t_main *m, t_vecf blocks[9])
 {
-	blocks[0] = (t_vecf){.x = floorf(m->plr.p.x - 1.f) + .5f, .y = floorf(m->plr.p.y - 1.f) + .5f};
-	blocks[1] = (t_vecf){.x = floorf(m->plr.p.x - 0.f) + .5f, .y = floorf(m->plr.p.y - 1.f) + .5f};
-	blocks[2] = (t_vecf){.x = floorf(m->plr.p.x + 1.f) + .5f, .y = floorf(m->plr.p.y - 1.f) + .5f};
-	blocks[3] = (t_vecf){.x = floorf(m->plr.p.x - 1.f) + .5f, .y = floorf(m->plr.p.y - 0.f) + .5f};
-	blocks[4] = (t_vecf){.x = floorf(m->plr.p.x - 0.f) + .5f, .y = floorf(m->plr.p.y - 0.f) + .5f};
-	blocks[5] = (t_vecf){.x = floorf(m->plr.p.x + 1.f) + .5f, .y = floorf(m->plr.p.y - 0.f) + .5f};
-	blocks[6] = (t_vecf){.x = floorf(m->plr.p.x - 1.f) + .5f, .y = floorf(m->plr.p.y + 1.f) + .5f};
-	blocks[7] = (t_vecf){.x = floorf(m->plr.p.x - 0.f) + .5f, .y = floorf(m->plr.p.y + 1.f) + .5f};
-	blocks[8] = (t_vecf){.x = floorf(m->plr.p.x + 1.f) + .5f, .y = floorf(m->plr.p.y + 1.f) + .5f};
+	blocks[0] = (t_vecf){.x = floorf(m->plr.p.x - 1.f) + .5f,
+		.y = floorf(m->plr.p.y - 1.f) + .5f};
+	blocks[1] = (t_vecf){.x = floorf(m->plr.p.x - 0.f) + .5f,
+		.y = floorf(m->plr.p.y - 1.f) + .5f};
+	blocks[2] = (t_vecf){.x = floorf(m->plr.p.x + 1.f) + .5f,
+		.y = floorf(m->plr.p.y - 1.f) + .5f};
+	blocks[3] = (t_vecf){.x = floorf(m->plr.p.x - 1.f) + .5f,
+		.y = floorf(m->plr.p.y - 0.f) + .5f};
+	blocks[4] = (t_vecf){.x = floorf(m->plr.p.x - 0.f) + .5f,
+		.y = floorf(m->plr.p.y - 0.f) + .5f};
+	blocks[5] = (t_vecf){.x = floorf(m->plr.p.x + 1.f) + .5f,
+		.y = floorf(m->plr.p.y - 0.f) + .5f};
+	blocks[6] = (t_vecf){.x = floorf(m->plr.p.x - 1.f) + .5f,
+		.y = floorf(m->plr.p.y + 1.f) + .5f};
+	blocks[7] = (t_vecf){.x = floorf(m->plr.p.x - 0.f) + .5f,
+		.y = floorf(m->plr.p.y + 1.f) + .5f};
+	blocks[8] = (t_vecf){.x = floorf(m->plr.p.x + 1.f) + .5f,
+		.y = floorf(m->plr.p.y + 1.f) + .5f};
 }
 
-void	clip_x(t_main *m, t_vecf block)
+void	clip_x(t_main *m, t_vecf block, char c)
 {
 	t_vecf	mv;
 
@@ -22,13 +31,13 @@ void	clip_x(t_main *m, t_vecf block)
 		mv.x = COLLISION_DIST - absf(sub(block, m->plr.p).x);
 	else
 		mv.x = -(COLLISION_DIST - absf(sub(block, m->plr.p).x));
-	if (get_block2(m, add(m->plr.p, mv)) == '1')
-		clip_y(m, block);
+	if (get_block2(m, add(m->plr.p, mv)) == c)
+		clip_y(m, block, c);
 	else
 		m->plr.p = add(m->plr.p, mv);
 }
 
-void	clip_y(t_main *m, t_vecf block)
+void	clip_y(t_main *m, t_vecf block, char c)
 {
 	t_vecf	mv;
 
@@ -37,10 +46,18 @@ void	clip_y(t_main *m, t_vecf block)
 		mv.y = COLLISION_DIST - absf(sub(block, m->plr.p).y);
 	else
 		mv.y = -(COLLISION_DIST - absf(sub(block, m->plr.p).y));
-	if (get_block2(m, add(m->plr.p, mv)) == '1')
-		clip_x(m, block);
+	if (get_block2(m, add(m->plr.p, mv)) == c)
+		clip_x(m, block, c);
 	else
 		m->plr.p = add(m->plr.p, mv);
+}
+
+int	check_collision2(t_main *m, char c, t_vecf blocks[9], int i)
+{
+	return (get_block2(m, blocks[i]) == c
+		&& absf(sub(blocks[i], m->plr.p).x) < COLLISION_DIST
+		&& absf(sub(blocks[i], m->plr.p).x)
+		>= absf(sub(blocks[i], m->plr.p).y));
 }
 
 void	check_collision(t_main *m)
@@ -52,12 +69,20 @@ void	check_collision(t_main *m)
 	i = 0;
 	while (i < 9)
 	{
-		if (get_block2(m, blocks[i]) == '1' && absf(sub(blocks[i], m->plr.p).x) < COLLISION_DIST
-			&& absf(sub(blocks[i], m->plr.p).x) >= absf(sub(blocks[i], m->plr.p).y))
-			clip_x(m, blocks[i]);
-		if (get_block2(m, blocks[i]) == '1' && absf(sub(blocks[i], m->plr.p).y) < COLLISION_DIST
-			&& absf(sub(blocks[i], m->plr.p).y) >= absf(sub(blocks[i], m->plr.p).x))
-			clip_y(m, blocks[i]);
+		if (check_collision2(m, '1', blocks, i))
+			clip_x(m, blocks[i], '1');
+		if (check_collision2(m, 'D', blocks, i))
+			clip_x(m, blocks[i], 'D');
+		if (get_block2(m, blocks[i]) == '1'
+			&& absf(sub(blocks[i], m->plr.p).y) < COLLISION_DIST
+			&& absf(sub(blocks[i], m->plr.p).y)
+			>= absf(sub(blocks[i], m->plr.p).x))
+			clip_y(m, blocks[i], '1');
+		if (get_block2(m, blocks[i]) == 'D'
+			&& absf(sub(blocks[i], m->plr.p).y) < COLLISION_DIST
+			&& absf(sub(blocks[i], m->plr.p).y)
+			>= absf(sub(blocks[i], m->plr.p).x))
+			clip_y(m, blocks[i], 'D');
 		i++;
 	}
 }

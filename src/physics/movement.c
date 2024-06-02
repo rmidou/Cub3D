@@ -6,11 +6,14 @@ void	move_ang(t_main *main, float a)
 
 	mv = ang_to_vecf(fix_ang(a + main->plr.a));
 	mv = scale(mv, SPEED);
-	if (get_block2(main, add(main->plr.p, mv)) != '1')
+	if (get_block2(main, add(main->plr.p, mv)) != '1'
+		|| get_block2(main, add(main->plr.p, mv)) != 'D')
 		main->plr.p = add(main->plr.p, mv);
-	else if (get_block2(main, add(main->plr.p, vecf(mv.x, 0.f))) != '1')
+	else if (get_block2(main, add(main->plr.p, vecf(mv.x, 0.f))) != '1'
+		|| get_block2(main, add(main->plr.p, vecf(mv.x, 0.f))) != 'D')
 		main->plr.p = add(main->plr.p, vecf(mv.x, 0.f));
-	else if (get_block2(main, add(main->plr.p, vecf(0.f, mv.y))) != '1')
+	else if (get_block2(main, add(main->plr.p, vecf(0.f, mv.y))) != '1'
+		|| get_block2(main, add(main->plr.p, vecf(0.f, mv.y))) != 'D')
 		main->plr.p = add(main->plr.p, vecf(0.f, mv.y));
 	check_collision(main);
 }
@@ -37,6 +40,8 @@ int	move(int key, t_main *main)
 		move_ang(main, 270);
 	if (key == 'd')
 		move_ang(main, 90);
+	if (key == 32)
+		main->map.door = 1;
 	if (key == 65363)
 		arrows1(main);
 	if (key == 65361)

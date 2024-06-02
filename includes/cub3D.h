@@ -123,6 +123,7 @@ typedef struct s_map
 	t_veci	size;
 	t_veci	spawn;
 	float	view;
+	int		door;
 	t_anim	n;
 	t_anim	s;
 	t_anim	e;
@@ -189,6 +190,8 @@ char	get_block(t_main *main);
 /*		textures.c		*/
 void	draw_texture(t_main *m, int x_pos);
 float	add_dithering(float l, int x, int y);
+t_txr	get_hit_texture(t_main *m, t_ray r);
+void	draw_row(t_main *m, t_veci p, t_txr t, float len);
 
 /*		parsing.c		*/
 int		build_map(void *mlx_ptr, t_map *m, char *file);
@@ -238,8 +241,8 @@ int		get_line_height(t_main *m);
 float	absf(float f);
 
 /*		collisions.c	*/
-void	clip_x(t_main *m, t_vecf block);
-void	clip_y(t_main *m, t_vecf block);
+void	clip_x(t_main *m, t_vecf block, char c);
+void	clip_y(t_main *m, t_vecf block, char c);
 void	check_collision(t_main *m);
 
 /*		mouse.c			*/
@@ -250,5 +253,6 @@ int		mouse(int x, int y, t_main *main);
 int		init_animation(t_anim *t, int frames);
 void	init_texture(t_main *m);
 void	update_textures(t_anim *t);
+void	door_remove(t_main *m);
 
 #endif

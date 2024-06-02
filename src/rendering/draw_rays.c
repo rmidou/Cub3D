@@ -68,7 +68,7 @@ void	shoot_rays(t_main *main)
 		main->ray.p.x = main->plr.p.x;
 		main->ray.p.y = main->plr.p.y;
 		while (out_of_bounds(main, main->ray.p) && (get_block(main) != '1'
-			&& get_block(main) != 'D'))
+				&& get_block(main) != 'D'))
 		{
 			whey(&main->ray);
 			main->ray.p = main->ray.n;

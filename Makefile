@@ -40,6 +40,7 @@ C_FILE		=	main.c					\
 				rendering/color.c		\
 				rendering/minimap.c		\
 				rendering/textures.c	\
+				rendering/textures2.c	\
 				rendering/animations.c	\
 
 SRC_DIR		=	./src/
