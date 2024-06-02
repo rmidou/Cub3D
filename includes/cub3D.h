@@ -49,6 +49,7 @@
 # define ERR_OUT_OF_BOUNDS		8
 # define ERR_PARSING			9
 # define ERR_ARG				10
+# define ERR_MAP_OPEN			11
 
 # define STAGE_DATA	0
 # define STAGE_MAP	1
@@ -247,5 +248,8 @@ int		init_animation(t_anim *t, int frames);
 void	init_texture(t_main *m);
 void	update_textures(t_anim *t);
 void	door_remove(t_main *m);
+
+/*		flood_fill.c	*/
+int		flood_fill(t_map *m);
 
 #endif

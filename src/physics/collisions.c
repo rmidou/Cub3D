@@ -31,7 +31,6 @@ void	clip_x(t_main *m, t_vecf block, char c, int stop)
 		mv.x = COLLISION_DIST - absf(sub(block, m->plr.p).x);
 	else
 		mv.x = -(COLLISION_DIST - absf(sub(block, m->plr.p).x));
-	printf("clip x %f - %f %f\n", dist(mv), mv.x, mv.y);
 	if (get_block2(m, add(m->plr.p, scale(mv, 2.f))) == c && !stop)
 		clip_y(m, block, c, 1);
 	else
