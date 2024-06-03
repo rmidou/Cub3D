@@ -131,5 +131,5 @@ int	build_map(void *mlx_ptr, t_map *m, char *file, t_main *main)
 	get_map_specs(m, main);
 	if (flood_fill(m))
 		return (ERR_MAP_OPEN);
-	return (OKAY_OKAY);
+	return (verif_textures(m));
 }

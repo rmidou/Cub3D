@@ -260,5 +260,6 @@ int		verif_spawn(t_map *m);
 
 /*		verif_map.c		*/
 int		verif_color_line(t_clr *c, char *line);
+int		verif_textures(t_map *m);
 
 #endif
