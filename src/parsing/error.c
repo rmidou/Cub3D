@@ -16,6 +16,22 @@ void	print_map(t_map *map)
 		ft_printf("|%s|\n", map->map[i]);
 }
 
+void	error_list(int err, char *line)
+{
+	if (err == ERR_ALREADY_LOADED)
+		printf("This texture is already loaded:\n%s\n", line);
+	if (err == ERR_MISSING_CLR)
+		printf("Missing color definition\n");
+	if (err == ERR_MISSING_TEX)
+		printf("Missing texture declaration\n");
+	if (err == ERR_PARSING)
+		printf("Parsing error on line:\n%s\n", line);
+	if (err == ERR_MAP_OPEN)
+		printf("Map needs to be closed\n");
+	if (err == ERR_ARG)
+		printf("Invalid argument list\n");
+}
+
 int	throw_error(int err, char *line)
 {
 	if (err == OKAY_OKAY)
@@ -23,10 +39,10 @@ int	throw_error(int err, char *line)
 	printf("Error\n");
 	if (err == ERR_OPEN)
 		printf("Failed to open file:\n%s\n", line);
-	if (err == ERR_ARG)
-		printf("Wrong arguments\n");
+	if (err == ERR_EXT)
+		printf("Expected .cub file\n");
 	if (err == ERR_MAP)
-		printf("Wrong map\n");
+		printf("Map is invalid\n");
 	if (err == ERR_NOFILE)
 		printf("Expected filepath after identifier:\n%s\n", line);
 	if (err == ERR_LOADTEX)
@@ -41,5 +57,6 @@ int	throw_error(int err, char *line)
 		printf("Unkown identifier:\n[%s]\n", line);
 	if (err == ERR_OUT_OF_BOUNDS)
 		printf("Color data must be contained within [0-255]:\n%s\n", line);
+	error_list(err, line);
 	return (1);
 }

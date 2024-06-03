@@ -21,12 +21,15 @@ int	verif_color_line(t_clr *c, char *line)
 	return (read_color_data(c, line));
 }
 
-int	verif_textures(t_map *m)
+int	verif_data(t_map *m)
 {
 	if (m->n.txrs[0].file == NULL
 		|| m->s.txrs[0].file == NULL
 		|| m->e.txrs[0].file == NULL
 		|| m->w.txrs[0].file == NULL)
 		return (ERR_MISSING_TEX);
+	if (m->ceiling.r < 0
+		|| m->floor.r < 0)
+		return (ERR_MISSING_CLR);
 	return (OKAY_OKAY);
 }

@@ -27,6 +27,7 @@ void	update_textures(t_anim *t)
 int	init_animation(t_anim *t, int frames)
 {
 	t->txrs = malloc(sizeof(t_txr) * frames);
+	ft_bzero(t->txrs, sizeof(t_txr) * frames);
 	t->size = frames;
 	return (1);
 }

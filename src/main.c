@@ -22,6 +22,8 @@ void	init(t_main *main, char **av)
 			&(main->scr.line), &(main->scr.endian));
 	main->scr.size = (t_veci){SCREEN_W, SCREEN_H};
 	main->map.door = 0;
+	main->map.ceiling = color(-1, -1, -1);
+	main->map.floor = color(-1, -1, -1);
 	init_texture(main);
 	if (build_map(main->mlxptr, &(main->map), av[1], main) != OKAY_OKAY)
 		on_destroy(main);
@@ -71,13 +73,14 @@ int	main(int ac, char **av)
 	int		fd;
 
 	fd = -1;
-	if (ac > 1)
+	if (ac == 2)
 		fd = open(av[1], O_RDONLY) < 0;
-	if (ac != 2 || fd < 0 || verif_cub(av[1]) == 0)
-	{
-		throw_error(ERR_ARG, "");
-		return (0);
-	}
+	else
+		return (throw_error(ERR_ARG, NULL));
+	if (fd < 0)
+		return (throw_error(ERR_OPEN, av[1]));
+	if (verif_cub(av[1]) == 0)
+		return (throw_error(ERR_EXT, NULL));
 	close(fd);
 	init(&main, av);
 	mlx_mouse_hide(main.mlxptr, main.winptr);

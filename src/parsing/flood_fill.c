@@ -66,13 +66,13 @@ void	print_tab(char **tab)
 	}
 }
 
-int	flood_fill(t_map *m)
+int	flood_fill(t_map *m, t_main *main)
 {
 	int		out;
 	t_veci	pos;
 	char	**map;
 
-	get_map_specs(m);
+	get_map_specs(m, main);
 	pos = m->spawn;
 	map = ft_split(m->data, '\n');
 	out = flood(map, m->size, pos) > 0;

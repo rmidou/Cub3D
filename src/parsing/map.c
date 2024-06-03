@@ -31,12 +31,14 @@ void	free_map2(t_map *m)
 	int	i;
 
 	i = 0;
+	if (m->map == NULL)
+		return ;
 	while (m->map[i])
 	{
-		free(m->map[i]);
+		free2(m->map[i]);
 		i++;
 	}
-	free(m->map);
+	free2(m->map);
 }
 
 void	free_map(void *mlxptr, t_map *m)

@@ -129,7 +129,7 @@ int	build_map(void *mlx_ptr, t_map *m, char *file, t_main *main)
 		return (ERR_PARSING);
 	m->map = ft_split(m->data, '\n');
 	get_map_specs(m, main);
-	if (flood_fill(m))
+	if (flood_fill(m, main))
 		return (ERR_MAP_OPEN);
-	return (verif_textures(m));
+	return (verif_data(m));
 }

@@ -53,6 +53,8 @@
 # define ERR_MISSING_TEX		12
 # define ERR_ALREADY_LOADED		13
 # define ERR_MAP				14
+# define ERR_MISSING_CLR		15
+# define ERR_EXT				16
 
 # define STAGE_DATA	0
 # define STAGE_MAP	1
@@ -192,7 +194,7 @@ void	draw_row(t_main *m, t_veci p, t_txr t, float len);
 
 /*		parsing.c		*/
 int		build_map(void *mlx_ptr, t_map *m, char *file, t_main *main);
-void	get_map_specs(t_map *m);
+void	get_map_specs(t_map *m, t_main *main);
 
 /*		parsing2.c		*/
 int		read_mapline(t_map *m, char *line);
@@ -255,11 +257,11 @@ void	update_textures(t_anim *t);
 void	door_remove(t_main *m);
 
 /*		flood_fill.c	*/
-int		flood_fill(t_map *m);
+int		flood_fill(t_map *m, t_main *main);
 int		verif_spawn(t_map *m);
 
 /*		verif_map.c		*/
 int		verif_color_line(t_clr *c, char *line);
-int		verif_textures(t_map *m);
+int		verif_data(t_map *m);
 
 #endif
