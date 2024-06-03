@@ -2,12 +2,12 @@
 
 int	load_tex(void *mlx_ptr, t_txr *t)
 {
+	if (t->file != NULL && t->img != NULL)
+		return (ERR_ALREADY_LOADED);
 	t->img = mlx_xpm_file_to_image(mlx_ptr, t->file, &(t->size.x),
 			&(t->size.y));
 	if (t->img == NULL)
-	{
 		return (ERR_LOADTEX);
-	}
 	t->data = mlx_get_data_addr(t->img, &(t->bpp), &(t->line), &(t->endian));
 	return (OKAY_OKAY);
 }
@@ -32,7 +32,7 @@ int	read_texture(void *mlx_ptr, t_map *m, char *line)
 		return (ERR_NOFILE);
 	if (line[ft_strlen(line) - 1] == '\n')
 		line[ft_strlen(line) - 1] = '\0';
-	t->file = str_adds(NULL, &(line[i]), ft_strlen(&(line[i])));
+	t->file = ft_strdup(&(line[i]));
 	return (load_tex(mlx_ptr, t));
 }
 
@@ -79,7 +79,7 @@ int	read_color(t_map *m, char *line)
 		i++;
 	if (line[i] == '\n' || line[i] == '\0')
 		return (ERR_NOCLR);
-	return (read_color_data(c, &(line[i])));
+	return (verif_color_line(c, &(line[i])));
 }
 
 int	read_mapline(t_map *m, char *line)

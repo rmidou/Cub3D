@@ -27,6 +27,7 @@ C_FILE		=	main.c					\
 				parsing/parsing2.c		\
 				parsing/error.c			\
 				parsing/flood_fill.c	\
+				parsing/verif_map.c		\
 										\
 				physics/movement.c		\
 				physics/collisions.c	\
