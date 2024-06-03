@@ -50,6 +50,8 @@ void	print_mini_map(t_main *main, char c, int yy, int ii)
 		{
 			if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
 				color = WHITE_PIXEL;
+			else if (c == 'D')
+				color = BLUE_PIXEL;
 			else
 				color = BLACK_PIXEL;
 			set_pixel(color, main->scr, x + ii * scale, y + yy * scale);

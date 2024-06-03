@@ -125,7 +125,6 @@ int	build_map(void *mlx_ptr, t_map *m, char *file)
 	if (err)
 		return (ERR_PARSING);
 	m->map = ft_split(m->data, '\n');
-	get_map_specs(m);
 	if (flood_fill(m))
 		return (ERR_MAP_OPEN);
 	return (OKAY_OKAY);

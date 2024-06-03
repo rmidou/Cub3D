@@ -47,6 +47,7 @@ int	flood_fill(t_map *m)
 	t_veci	pos;
 	char	**map;
 
+	get_map_specs(m);
 	pos = m->spawn;
 	map = ft_split(m->data, '\n');
 	out = flood(map, m->size, pos) > 0;
