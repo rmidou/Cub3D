@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jde-meo <jde-meo@student.42perpignan.fr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/03 13:55:18 by jde-meo           #+#    #+#             */
+/*   Updated: 2024/06/03 14:00:39 by jde-meo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -9,7 +21,6 @@
 # include <string.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
-//# include <fcntl.h>
 # include <math.h>
 
 # define RED_PIXEL	0xFF0000
@@ -71,7 +82,7 @@
 
 # define COLLISION_DIST	0.6f
 
-# define MOUSE			1
+# define MOUSE			0
 # define MOUSE_SPEED	2.5f
 # define NB_FRAME		5
 

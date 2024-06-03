@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jde-meo <jde-meo@student.42perpignan.fr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/03 13:55:15 by jde-meo           #+#    #+#             */
+/*   Updated: 2024/06/03 14:01:57 by jde-meo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/cub3D.h"
 
 int	on_destroy(t_main *main)
@@ -83,9 +95,9 @@ int	main(int ac, char **av)
 		return (throw_error(ERR_EXT, NULL));
 	close(fd);
 	init(&main, av);
-	mlx_mouse_hide(main.mlxptr, main.winptr);
 	mlx_hook(main.winptr, KeyRelease, KeyReleaseMask, &move, &main);
-	mlx_hook(main.winptr, 6, 64, &mouse, &main);
+	if (MOUSE)
+		mlx_hook(main.winptr, 6, 64, &mouse, &main);
 	mlx_hook(main.winptr, DestroyNotify, StructureNotifyMask,
 		&on_destroy, &main);
 	mlx_loop_hook(main.mlxptr, &loop, &main);

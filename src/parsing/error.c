@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jde-meo <jde-meo@student.42perpignan.fr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/03 13:54:22 by jde-meo           #+#    #+#             */
+/*   Updated: 2024/06/03 13:58:41 by jde-meo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3D.h"
 
 int	max(int i1, int i2)
@@ -54,7 +66,7 @@ int	throw_error(int err, char *line)
 	if (err == ERR_NO_DATA_EXPECTED)
 		printf("No data expected after map:\n%s\n", line);
 	if (err == ERR_UNKNOWN)
-		printf("Unkown identifier:\n[%s]\n", line);
+		printf("Unkown identifier:\n%s\n", line);
 	if (err == ERR_OUT_OF_BOUNDS)
 		printf("Color data must be contained within [0-255]:\n%s\n", line);
 	error_list(err, line);

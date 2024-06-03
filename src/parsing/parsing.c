@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jde-meo <jde-meo@student.42perpignan.fr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/03 13:54:11 by jde-meo           #+#    #+#             */
+/*   Updated: 2024/06/03 13:54:13 by jde-meo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3D.h"
 
 int	get_line_type(char *line)
@@ -130,6 +142,6 @@ int	build_map(void *mlx_ptr, t_map *m, char *file, t_main *main)
 	m->map = ft_split(m->data, '\n');
 	get_map_specs(m, main);
 	if (flood_fill(m, main))
-		return (ERR_MAP_OPEN);
-	return (verif_data(m));
+		return (throw_error(ERR_MAP_OPEN, NULL));
+	return (throw_error(verif_data(m), NULL));
 }

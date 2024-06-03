@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jde-meo <jde-meo@student.42perpignan.fr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/03 13:55:07 by jde-meo           #+#    #+#             */
+/*   Updated: 2024/06/03 14:12:44 by jde-meo          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3D.h"
 
 void	print_player(t_main *main, int scale)
@@ -54,7 +66,8 @@ void	print_mini_map(t_main *main, char c, int yy, int ii)
 				color = BLUE_PIXEL;
 			else
 				color = BLACK_PIXEL;
-			set_pixel(color, main->scr, x + ii * scale, y + yy * scale);
+			if (c != ' ')
+				set_pixel(color, main->scr, x + ii * scale, y + yy * scale);
 			y++;
 		}
 		x++;
