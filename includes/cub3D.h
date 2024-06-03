@@ -50,6 +50,7 @@
 # define ERR_PARSING			9
 # define ERR_ARG				10
 # define ERR_MAP_OPEN			11
+# define ERR_MAP				12
 
 # define STAGE_DATA	0
 # define STAGE_MAP	1
@@ -188,7 +189,7 @@ t_txr	get_hit_texture(t_main *m, t_ray r);
 void	draw_row(t_main *m, t_veci p, t_txr t, float len);
 
 /*		parsing.c		*/
-int		build_map(void *mlx_ptr, t_map *m, char *file);
+int		build_map(void *mlx_ptr, t_map *m, char *file, t_main *main);
 
 /*		parsing2.c		*/
 int		read_mapline(t_map *m, char *line);
@@ -251,5 +252,6 @@ void	door_remove(t_main *m);
 
 /*		flood_fill.c	*/
 int		flood_fill(t_map *m);
+int		verif_spawn(t_map *m);
 
 #endif

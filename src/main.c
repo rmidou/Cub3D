@@ -23,7 +23,7 @@ void	init(t_main *main, char **av)
 	main->scr.size = (t_veci){SCREEN_W, SCREEN_H};
 	main->map.door = 0;
 	init_texture(main);
-	if (build_map(main->mlxptr, &(main->map), av[1]) != OKAY_OKAY)
+	if (build_map(main->mlxptr, &(main->map), av[1], main) != OKAY_OKAY)
 		on_destroy(main);
 	main->plr.p.x = main->map.spawn.x + .5f;
 	main->plr.p.y = main->map.spawn.y + .5f;
