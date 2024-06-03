@@ -24,7 +24,9 @@ int	throw_error(int err, char *line)
 	if (err == ERR_OPEN)
 		printf("Failed to open file:\n%s\n", line);
 	if (err == ERR_ARG)
-		printf("Wrong argument\n");
+		printf("Wrong arguments\n");
+	if (err == ERR_MAP)
+		printf("Wrong map\n");
 	if (err == ERR_NOFILE)
 		printf("Expected filepath after identifier:\n%s\n", line);
 	if (err == ERR_LOADTEX)

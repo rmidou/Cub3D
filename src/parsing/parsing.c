@@ -78,7 +78,7 @@ void	get_spawn(t_map *m)
 		m->view = 180;
 }
 
-void	get_map_specs(t_map *m)
+void	get_map_specs(t_map *m, t_main *main)
 {
 	int	x;
 	int	y;
@@ -98,10 +98,15 @@ void	get_map_specs(t_map *m)
 			m->map[y] = str_addc(m->map[y], ' ');
 		y++;
 	}
+	if (verif_spawn(m) != 1)
+	{
+		throw_error(ERR_MAP, "");
+		on_destroy(main);
+	}
 	get_spawn(m);
 }
 
-int	build_map(void *mlx_ptr, t_map *m, char *file)
+int	build_map(void *mlx_ptr, t_map *m, char *file, t_main *main)
 {
 	int		fd;
 	int		stage;
@@ -111,8 +116,6 @@ int	build_map(void *mlx_ptr, t_map *m, char *file)
 	err = 0;
 	stage = STAGE_DATA;
 	fd = open(file, O_RDONLY);
-	if (fd < 0)
-		return (ERR_OPEN);
 	while (!err)
 	{
 		line = get_next_line(fd);
@@ -125,6 +128,7 @@ int	build_map(void *mlx_ptr, t_map *m, char *file)
 	if (err)
 		return (ERR_PARSING);
 	m->map = ft_split(m->data, '\n');
+	get_map_specs(m, main);
 	if (flood_fill(m))
 		return (ERR_MAP_OPEN);
 	return (OKAY_OKAY);

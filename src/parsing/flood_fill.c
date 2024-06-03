@@ -1,5 +1,30 @@
 #include "../../includes/cub3D.h"
 
+int	verif_spawn(t_map *m)
+{
+	int	x;
+	int	y;
+	int	spawn;
+
+	y = 0;
+	spawn = 0;
+	while (m->map[y])
+	{
+		x = 0;
+		while (m->map[y][x])
+		{
+			if (m->map[y][x] == 'N'
+				|| m->map[y][x] == 'S'
+				|| m->map[y][x] == 'E'
+				|| m->map[y][x] == 'W')
+				spawn++;
+			x++;
+		}
+		y++;
+	}
+	return (spawn);
+}
+
 void	free_split(char **tab)
 {
 	int	i;
