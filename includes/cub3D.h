@@ -9,7 +9,7 @@
 # include <string.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
-# include <fcntl.h>
+//# include <fcntl.h>
 # include <math.h>
 
 # define RED_PIXEL	0xFF0000

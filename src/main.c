@@ -74,7 +74,7 @@ int	main(int ac, char **av)
 
 	fd = -1;
 	if (ac == 2)
-		fd = open(av[1], O_RDONLY) < 0;
+		fd = open(av[1], O_RDONLY);
 	else
 		return (throw_error(ERR_ARG, NULL));
 	if (fd < 0)
